@@ -836,6 +836,12 @@
     text-decoration: none;
 }
 
+.auth-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
 .auth-nav-link:hover,
 .auth-switch a,
 .auth-options a {
