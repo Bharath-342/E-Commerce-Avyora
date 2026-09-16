@@ -46,6 +46,11 @@ function applyTheme() {
         currentTheme
     );
 
+    document.documentElement.setAttribute(
+        "data-bs-theme",
+        currentTheme
+    );
+
 
     const brightness =
         currentTheme === "light"

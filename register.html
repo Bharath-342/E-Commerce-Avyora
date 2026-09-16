@@ -3,36 +3,380 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVYORA - Create account</title>
+    <title>AVYORA - Create Your Sacred Account</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/src/style.css">
 </head>
-<body class="auth-page">
+<body class="auth-page auth-page-heavenly">
     <nav class="navbar navbar-expand-lg fixed-top border-bottom">
-        <div class="container"><a href="index.html" class="navbar-brand"><img src="/avyora-logo.png" alt="AVYORA" class="brand-logo theme-logo"></a><div class="auth-nav-actions"><div class="dropdown"><button class="theme-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Theme settings" title="Theme settings"><i id="themeIcon" class="bi bi-sun"></i></button><div class="dropdown-menu dropdown-menu-end theme-dropdown p-3"><h6 class="fw-bold mb-3">Appearance</h6><div id="lightThemeOption" class="theme-option active d-flex align-items-center p-2 mb-2"><i class="bi bi-sun fs-5 me-3"></i><div><div class="fw-semibold">Light</div><small class="text-secondary">Light appearance</small></div></div><div id="darkThemeOption" class="theme-option d-flex align-items-center p-2 mb-3"><i class="bi bi-moon-stars fs-5 me-3"></i><div><div class="fw-semibold">Dark</div><small class="text-secondary">Dark appearance</small></div></div><hr><div class="mt-3"><div class="d-flex justify-content-between align-items-center mb-2"><span class="fw-semibold">Brightness</span><span id="brightnessValue" class="text-secondary">100%</span></div><input type="range" class="form-range" id="brightnessSlider" min="50" max="100" value="100" step="1"></div></div></div><a href="login.html" class="auth-nav-link">Already a member? Sign in <i class="bi bi-arrow-up-right"></i></a></div></div>
-    </nav>
-    <main class="auth-page-section">
-        <div class="auth-motion-layer" aria-hidden="true"><span class="auth-motion-ring auth-motion-ring-one"></span><span class="auth-motion-ring auth-motion-ring-two"></span><span class="auth-motion-spark auth-motion-spark-one"></span><span class="auth-motion-spark auth-motion-spark-two"></span><span class="auth-floating-item auth-floating-item-one"><img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=220&q=75" alt=""></span><span class="auth-floating-item auth-floating-item-two"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=220&q=75" alt=""></span><span class="auth-floating-item auth-floating-item-three"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=220&q=75" alt=""></span></div>
         <div class="container">
-            <div class="auth-layout">
-                <div class="auth-intro auth-reveal-intro"><span class="section-kicker">WELCOME TO AVYORA</span><h1>Make room for the things you love.</h1><p>Create your account to save your details, track orders, and keep your favorite finds close.</p><div class="auth-showcase" aria-hidden="true"><div class="auth-showcase-label"><span>THE AVYORA EDIT</span><i class="bi bi-arrow-up-right"></i></div><div class="auth-showcase-art"><div class="auth-showcase-orbit"></div><div class="auth-showcase-card auth-showcase-card-one"><img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80" alt=""></div><div class="auth-showcase-card auth-showcase-card-two"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" alt=""></div><div class="auth-showcase-card auth-showcase-card-three"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" alt=""></div><span class="auth-showcase-word">find<br>your<br>favourite</span></div></div><div class="auth-intro-note"><i class="bi bi-stars"></i><span>Personalized shopping, thoughtfully brought together.</span></div></div>
-                <section class="auth-card auth-reveal-card">
-                    <span class="section-kicker">NEW HERE?</span><h2>Create your account</h2><p class="auth-card-subtitle">Join AVYORA in just a few moments.</p>
-                    <form id="registerForm" class="auth-form" novalidate>
-                        <div class="auth-field"><label for="registerName">Full name</label><input id="registerName" name="fullName" type="text" placeholder="Your full name" autocomplete="name" required></div>
-                        <div class="auth-field"><label for="registerEmail">Email address</label><input id="registerEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required></div>
-                        <div class="auth-field"><label for="registerPassword">Password</label><input id="registerPassword" name="password" type="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required></div>
-                        <div class="auth-field"><label for="registerConfirmPassword">Confirm password</label><input id="registerConfirmPassword" name="confirmPassword" type="password" placeholder="Repeat your password" autocomplete="new-password" required></div>
+            <a href="index.html" class="navbar-brand">
+                <img src="/avyora-logo.png" alt="AVYORA" class="brand-logo theme-logo">
+            </a>
+            <div class="auth-nav-actions">
+                <div class="dropdown">
+                    <button class="theme-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Theme settings" title="Theme settings">
+                        <i id="themeIcon" class="bi bi-sun"></i>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end theme-dropdown p-3">
+                        <h6 class="fw-bold mb-3">Appearance</h6>
+                        <div id="lightThemeOption" class="theme-option active d-flex align-items-center p-2 mb-2">
+                            <i class="bi bi-sun fs-5 me-3"></i>
+                            <div>
+                                <div class="fw-semibold">Light</div>
+                                <small class="text-secondary">Light appearance</small>
+                            </div>
+                        </div>
+                        <div id="darkThemeOption" class="theme-option d-flex align-items-center p-2 mb-3">
+                            <i class="bi bi-moon-stars fs-5 me-3"></i>
+                            <div>
+                                <div class="fw-semibold">Dark</div>
+                                <small class="text-secondary">Dark appearance</small>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="fw-semibold">Brightness</span>
+                                <span id="brightnessValue" class="text-secondary">100%</span>
+                            </div>
+                            <input type="range" class="form-range" id="brightnessSlider" min="50" max="100" value="100" step="1">
+                        </div>
+                    </div>
+                </div>
+                <a href="login.html" class="auth-nav-link">Already a member? Sign in <i class="bi bi-arrow-up-right"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="auth-page-section heavenly-section">
+        <!-- Interactive Celestial Stardust Canvas -->
+        <canvas id="heavenlyCanvas" class="heavenly-canvas" aria-hidden="true"></canvas>
+
+        <!-- Ethereal Ambient Glows -->
+        <div class="heavenly-ambient" aria-hidden="true">
+            <div class="heavenly-glow heavenly-glow-1"></div>
+            <div class="heavenly-glow heavenly-glow-2"></div>
+            <div class="heavenly-glow heavenly-glow-3"></div>
+            <div class="heavenly-light-beam"></div>
+        </div>
+
+        <div class="container position-relative" style="z-index: 2;">
+            <div class="auth-layout heavenly-layout">
+                <!-- Left Celestial Intro & 3D Showcase -->
+                <div class="auth-intro auth-reveal-intro">
+                    <span class="section-kicker mb-2">WELCOME TO AVYORA</span>
+                    <div class="heavenly-badge mb-3">
+                        <i class="bi bi-stars"></i>
+                        <span>AVYORA SANCTUARY</span>
+                        <i class="bi bi-sparkles"></i>
+                    </div>
+                    <h1>AVYORA — Make room for the things you love.</h1>
+                    <p>Create your sacred account to unlock curated edits, divine member privileges, and effortless checkout crafted for pure serenity.</p>
+                    
+                    <div class="auth-showcase heavenly-showcase" aria-hidden="true">
+                        <div class="auth-showcase-label">
+                            <span>THE AVYORA EDIT ✦ CELESTIAL</span>
+                            <i class="bi bi-stars text-warning"></i>
+                        </div>
+                        <div class="auth-showcase-art">
+                            <div class="auth-showcase-orbit heavenly-orbit-1"></div>
+                            <div class="auth-showcase-orbit heavenly-orbit-2"></div>
+                            <div class="auth-showcase-card auth-showcase-card-one heavenly-float-1">
+                                <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80" alt="Luxury timepiece">
+                            </div>
+                            <div class="auth-showcase-card auth-showcase-card-two heavenly-float-2">
+                                <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" alt="Curated leather bag">
+                            </div>
+                            <div class="auth-showcase-card auth-showcase-card-three heavenly-float-3">
+                                <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" alt="Audio craftsmanship">
+                            </div>
+                            <span class="auth-showcase-word">avyora<br>curated<br>luxury</span>
+                        </div>
+                    </div>
+
+                    <!-- Heavenly Feature Badges -->
+                    <div class="heavenly-pills-wrap" aria-hidden="true">
+                        <div class="heavenly-pill">
+                            <i class="bi bi-patch-check-fill"></i>
+                            <span>100% Authentic Luxury</span>
+                        </div>
+                        <div class="heavenly-pill">
+                            <i class="bi bi-gem"></i>
+                            <span>Artisanal Excellence</span>
+                        </div>
+                        <div class="heavenly-pill">
+                            <i class="bi bi-shield-heart-fill"></i>
+                            <span>Sanctuary Security</span>
+                        </div>
+                    </div>
+
+                    <div class="auth-intro-note mt-4">
+                        <i class="bi bi-stars"></i>
+                        <span>Join over 50,000 members experiencing shopping in pure tranquility.</span>
+                    </div>
+                </div>
+
+                <!-- Right Crystalline Glassmorphism Card -->
+                <section class="auth-card heavenly-card auth-reveal-card">
+                    <div class="heavenly-card-header mb-4">
+                        <span class="section-kicker"><i class="bi bi-stars me-1 text-warning"></i> JOIN AVYORA</span>
+                        <h2>Create your account</h2>
+                        <p class="auth-card-subtitle mb-0">Your gateway to curated luxury begins in moments.</p>
+                    </div>
+
+                    <form id="registerForm" class="auth-form heavenly-form" novalidate>
+                        <!-- Full Name -->
+                        <div class="auth-field heavenly-field">
+                            <label for="registerName">Full name</label>
+                            <div class="heavenly-input-wrap">
+                                <i class="bi bi-person-fill heavenly-input-icon"></i>
+                                <input id="registerName" name="fullName" type="text" placeholder="Your full name" autocomplete="name" required>
+                            </div>
+                        </div>
+
+                        <!-- Email Address -->
+                        <div class="auth-field heavenly-field">
+                            <label for="registerEmail">Email address</label>
+                            <div class="heavenly-input-wrap">
+                                <i class="bi bi-envelope-fill heavenly-input-icon"></i>
+                                <input id="registerEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="auth-field heavenly-field">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="registerPassword">Password</label>
+                                <span id="strengthLabel" class="heavenly-strength-label text-secondary">At least 6 characters</span>
+                            </div>
+                            <div class="heavenly-input-wrap">
+                                <i class="bi bi-shield-lock-fill heavenly-input-icon"></i>
+                                <input id="registerPassword" name="password" type="password" placeholder="Create a strong password" autocomplete="new-password" minlength="6" required>
+                                <button type="button" class="heavenly-toggle-password" id="togglePasswordBtn" aria-label="Toggle password visibility">
+                                    <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                                </button>
+                            </div>
+                            <!-- Dynamic Heavenly Password Strength Meter -->
+                            <div class="heavenly-strength-track" aria-hidden="true">
+                                <div class="heavenly-strength-bar" id="strengthBar"></div>
+                            </div>
+                            <div class="heavenly-strength-hints" id="strengthHints">
+                                <span class="strength-pill" id="hintLength"><i class="bi bi-circle"></i> 6+ chars</span>
+                                <span class="strength-pill" id="hintNumber"><i class="bi bi-circle"></i> Number</span>
+                                <span class="strength-pill" id="hintSpecial"><i class="bi bi-circle"></i> Symbol</span>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div class="auth-field heavenly-field">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="registerConfirmPassword">Confirm password</label>
+                                <span id="matchLabel" class="heavenly-match-label"></span>
+                            </div>
+                            <div class="heavenly-input-wrap">
+                                <i class="bi bi-key-fill heavenly-input-icon"></i>
+                                <input id="registerConfirmPassword" name="confirmPassword" type="password" placeholder="Repeat your password" autocomplete="new-password" required>
+                                <button type="button" class="heavenly-toggle-password" id="toggleConfirmPasswordBtn" aria-label="Toggle confirm password visibility">
+                                    <i class="bi bi-eye" id="toggleConfirmPasswordIcon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions Checkbox -->
+                        <div class="heavenly-terms">
+                            <label class="d-flex align-items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="agreeTerms" required checked>
+                                <span>I agree to the <a href="javascript:void(0)" id="openTermsLink" class="heavenly-terms-link">Terms of Service</a> &amp; <a href="javascript:void(0)" id="openPrivacyLink" class="heavenly-terms-link">Privacy Policy</a></span>
+                            </label>
+                        </div>
+
                         <p id="registerMessage" class="auth-message" role="alert" aria-live="polite"></p>
-                        <button type="submit" class="btn btn-avyora auth-submit">Create account <i class="bi bi-arrow-right"></i></button>
+
+                        <!-- Heavenly Submit Button -->
+                        <button type="submit" id="registerSubmitBtn" class="btn btn-avyora auth-submit heavenly-submit">
+                            <span class="btn-shine"></span>
+                            <span class="btn-content d-flex align-items-center justify-content-center gap-2">
+                                <span id="btnText">Ascend to AVYORA</span>
+                                <i class="bi bi-stars" id="btnIcon"></i>
+                            </span>
+                            <span id="btnSpinner" class="heavenly-spinner d-none" aria-hidden="true">
+                                <span class="spinner-dot"></span>
+                                <span class="spinner-dot"></span>
+                                <span class="spinner-dot"></span>
+                            </span>
+                        </button>
                     </form>
-                    <p class="auth-switch">Already have an account? <a href="login.html">Sign in</a></p>
+
+                    <p class="auth-switch">Already a member of our sanctuary? <a href="login.html">Sign in here <i class="bi bi-arrow-right-short"></i></a></p>
                 </section>
             </div>
         </div>
     </main>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script><script type="module" src="/src/main.js"></script><script type="module" src="/src/theme.js"></script>
+
+    <!-- Floating Heavenly Terms & Privacy Policy Page Modal -->
+    <div id="heavenlyRulesModal" class="heavenly-rules-backdrop d-none" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="rulesModalTitle">
+        <div class="heavenly-rules-card">
+            <!-- Modal Header -->
+            <div class="heavenly-rules-header">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rules-header-icon">
+                        <i class="bi bi-shield-check"></i>
+                    </div>
+                    <div>
+                        <span class="rules-kicker">AVYORA SANCTUARY STANDARDS</span>
+                        <h3 id="rulesModalTitle" class="rules-title">Terms &amp; Sanctuary Policies</h3>
+                    </div>
+                </div>
+                <button type="button" id="closeRulesBtn" class="rules-close-btn" aria-label="Close rules dialog">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Tabs (Terms vs Privacy) -->
+            <div class="rules-tabs-nav" role="tablist">
+                <button type="button" id="tabTermsBtn" class="rules-tab-btn active" role="tab" aria-selected="true" aria-controls="rulesTermsPanel">
+                    <i class="bi bi-file-earmark-text-fill"></i>
+                    <span>Terms of Service</span>
+                </button>
+                <button type="button" id="tabPrivacyBtn" class="rules-tab-btn" role="tab" aria-selected="false" aria-controls="rulesPrivacyPanel">
+                    <i class="bi bi-shield-lock-fill"></i>
+                    <span>Privacy Policy</span>
+                </button>
+            </div>
+
+            <!-- Modal Scrollable Content -->
+            <div class="rules-body-scroll">
+                <!-- Terms of Service Panel -->
+                <div id="rulesTermsPanel" class="rules-panel active" role="tabpanel">
+                    <div class="rules-callout">
+                        <i class="bi bi-stars"></i>
+                        <div>
+                            <strong>Sacred Commitment:</strong> At AVYORA, our sanctuary was established to offer an ethereal, peaceful, and trustworthy shopping experience. By creating an account, you agree to these guiding principles.
+                        </div>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">01</span>
+                            <h4>Sanctuary Membership &amp; Eligibility</h4>
+                        </div>
+                        <p>Membership in AVYORA is personal and designed for individuals aged 18 and older. You agree to provide genuine, accurate details upon registration to ensure seamless delivery and account security.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">02</span>
+                            <h4>100% Curated Authenticity &amp; Craftsmanship</h4>
+                        </div>
+                        <p>Every piece presented on AVYORA undergoes strict quality and authenticity verification. All product descriptions, materials, and imagery reflect authentic craftsmanship and genuine designer creations.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">03</span>
+                            <h4>Orders, Pricing &amp; Complimentary Returns</h4>
+                        </div>
+                        <p>Prices are listed in local currency and inclusive of applicable standard taxes. We offer an effortless 30-day sanctuary return guarantee on all unworn, pristine-condition items with original tags and packaging intact.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">04</span>
+                            <h4>Account Protection &amp; Sanctuary Etiquette</h4>
+                        </div>
+                        <p>You are responsible for maintaining the confidentiality of your credentials. Any unauthorized access should be reported immediately. Fraudulent, abusive, or automated scraping behaviors are strictly prohibited.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">05</span>
+                            <h4>Intellectual Property &amp; Design Rights</h4>
+                        </div>
+                        <p>All logos, imagery, typography, motion designs, and editorial content on AVYORA are proprietary assets protected by international copyright laws. Reproduction without written consent is strictly forbidden.</p>
+                    </div>
+                </div>
+
+                <!-- Privacy Policy Panel -->
+                <div id="rulesPrivacyPanel" class="rules-panel d-none" role="tabpanel">
+                    <div class="rules-callout privacy-callout">
+                        <i class="bi bi-shield-fill-check"></i>
+                        <div>
+                            <strong>Your Privacy Sanctuary:</strong> We treat your personal data with the highest reverence. We never sell, lease, or monetize your personal information with third parties.
+                        </div>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">01</span>
+                            <h4>Information We Collect with Reverence</h4>
+                        </div>
+                        <p>We collect only the essential information needed to personalize your experience: your name, email address, shipping destination, order preferences, and voluntary profile details.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">02</span>
+                            <h4>End-to-End Encryption &amp; Payment Serenity</h4>
+                        </div>
+                        <p>All transactions are guarded with industry-leading 256-bit TLS encryption. Credit card data is never stored on our servers and is processed exclusively via PCI-DSS Level 1 compliant financial gateways.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">03</span>
+                            <h4>Cookie Serenity &amp; Preference Memory</h4>
+                        </div>
+                        <p>We use subtle, functional cookies to remember your theme preference (Light/Dark mode), brightness, and bag items so your experience feels continuous and tranquil whenever you return.</p>
+                    </div>
+
+                    <div class="rules-section">
+                        <div class="rules-section-header">
+                            <span class="rules-badge">04</span>
+                            <h4>Your Divine Rights &amp; Full Control</h4>
+                        </div>
+                        <p>You retain complete sovereignty over your information. At any moment, you can request an export of your account records or permanent deletion of your profile by accessing your Sanctuary Account settings.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="heavenly-rules-footer">
+                <div class="rules-update-date">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Last updated: September 2026</span>
+                </div>
+                <div class="d-flex gap-2">
+                    <button type="button" id="acceptRulesBtn" class="btn btn-avyora rules-accept-btn">
+                        <i class="bi bi-check2-circle"></i>
+                        <span>I Understand &amp; Agree</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Heavenly Ascension Celebration Modal -->
+    <div id="heavenlyCelebrationModal" class="heavenly-modal-backdrop d-none" aria-hidden="true">
+        <div class="heavenly-modal-content">
+            <div class="heavenly-modal-icon-ring">
+                <div class="heavenly-modal-icon">
+                    <i class="bi bi-stars"></i>
+                </div>
+            </div>
+            <span class="heavenly-modal-badge">✨ WELCOME TO THE SANCTUARY ✨</span>
+            <h3 id="celebrationName" class="heavenly-modal-title">Welcome, Friend!</h3>
+            <p class="heavenly-modal-desc">Your sacred AVYORA account is created. Entering a universe of divine luxury...</p>
+            <div class="heavenly-progress-portal">
+                <div class="portal-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/theme.js"></script>
 </body>
 </html>

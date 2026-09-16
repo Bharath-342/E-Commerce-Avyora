@@ -3,17 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout | AVYORA</title>
+    <title>Secure Checkout | AVYORA</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="/src/style.css">
 </head>
-<body>
+<body class="checkout-body">
     <nav class="navbar navbar-expand-lg fixed-top border-bottom">
         <div class="container">
             <a href="index.html" class="navbar-brand"><img src="/avyora-logo.png" alt="AVYORA" class="brand-logo theme-logo"></a>
-            <a class="categories-back-link" href="cart.html"><i class="bi bi-arrow-left"></i> Back to cart</a>
+            <form class="d-flex mx-lg-auto my-2 my-lg-0 universal-search-form" data-product-search-form style="max-width: 440px; width: 100%; position: relative;">
+                <div class="input-group">
+                    <input type="search" class="form-control" placeholder="Search products, pages (e.g. cart, account, home)..." aria-label="Search products and pages" autocomplete="off">
+                    <button class="btn btn-avyora" type="submit" aria-label="Search">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+            <div class="d-flex align-items-center gap-3 ms-lg-3">
+                <span class="checkout-nav-badge"><i class="bi bi-shield-lock-fill"></i> 256-Bit SSL Encrypted</span>
+                <a class="categories-back-link" href="cart.html"><i class="bi bi-arrow-left"></i> Back to cart</a>
+            </div>
         </div>
     </nav>
 
@@ -21,49 +32,460 @@
         <div class="container">
             <div class="cart-page-header">
                 <div class="cart-page-breadcrumb"><a href="index.html">Home</a> <span>/</span> <a href="cart.html">Cart</a> <span>/</span> Checkout</div>
-                <h1 class="cart-page-title">Checkout</h1>
-                <p class="cart-page-subtitle">Add your delivery details and place your order securely.</p>
+                <h1 class="cart-page-title">Secure Checkout</h1>
+                <p class="cart-page-subtitle">Complete your delivery and payment details to confirm your order.</p>
             </div>
 
-            <div class="checkout-page-layout">
-                <section class="checkout-form-panel">
-                    <span class="section-kicker">DELIVERY DETAILS</span>
-                    <h2>Where should we send it?</h2>
-                    <form id="checkoutForm" class="checkout-form" novalidate>
-                        <div class="field">
-                            <label for="fullName">Full name</label>
-                            <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="field">
-                            <label for="email">Email</label>
-                            <input id="email" name="email" type="email" placeholder="you@example.com" required>
-                        </div>
-                        <div class="field">
-                            <label for="address">Address</label>
-                            <textarea id="address" name="address" placeholder="Your delivery address" required></textarea>
-                        </div>
-                        <div class="field">
-                            <label for="city">City</label>
-                            <input id="city" name="city" type="text" placeholder="City" required>
-                        </div>
-                        <button type="submit" class="btn btn-avyora checkout-button" id="checkoutButton">Place order <i class="bi bi-lock"></i></button>
-                    </form>
-                </section>
+            <!-- Empty Cart Notice (hidden by default) -->
+            <div id="checkoutEmptyNotice" class="checkout-empty-banner d-none">
+                <i class="bi bi-bag-x"></i>
+                <h3>Your bag is currently empty</h3>
+                <p>Discover our sanctuary of curated luxury pieces before proceeding to checkout.</p>
+                <a href="index.html" class="btn btn-avyora">Explore Sanctuary Collections <i class="bi bi-arrow-right"></i></a>
+            </div>
 
+            <div class="checkout-page-layout" id="checkoutMainLayout">
+                <!-- Left Form Section -->
+                <div class="checkout-main-content">
+                    <!-- Signed-in Auto-fill Banner -->
+                    <div id="checkoutAuthNotice" class="checkout-auth-banner d-none">
+                        <i class="bi bi-person-check-fill"></i>
+                        <div>
+                            <span>Welcome back, <strong id="checkoutAuthUser">Shopper</strong>!</span>
+                            <small class="d-block text-secondary">Your delivery details have been pre-filled from your profile.</small>
+                        </div>
+                    </div>
+
+                    <form id="checkoutForm" class="checkout-form" novalidate>
+                        <!-- Step 1: Delivery Details -->
+                        <section class="checkout-step-panel">
+                            <div class="checkout-step-header">
+                                <span class="checkout-step-num">1</span>
+                                <div>
+                                    <span class="section-kicker">DELIVERY DESTINATION</span>
+                                    <h2>Where should we send your order?</h2>
+                                </div>
+                            </div>
+
+                            <div class="checkout-fields-grid">
+                                <div class="field field-full">
+                                    <label for="fullName">Full name <span class="text-danger">*</span></label>
+                                    <div class="checkout-input-wrap">
+                                        <i class="bi bi-person-fill checkout-field-icon"></i>
+                                        <input id="fullName" name="fullName" type="text" placeholder="e.g. Eleanor Vance" required>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="email">Email address <span class="text-danger">*</span></label>
+                                    <div class="checkout-input-wrap">
+                                        <i class="bi bi-envelope-fill checkout-field-icon"></i>
+                                        <input id="email" name="email" type="email" placeholder="you@example.com" required>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="phone">Phone number <span class="text-danger">*</span></label>
+                                    <div class="checkout-input-wrap">
+                                        <i class="bi bi-telephone-fill checkout-field-icon"></i>
+                                        <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" required>
+                                    </div>
+                                </div>
+
+                                <div class="field field-full">
+                                    <label for="address">Street address &amp; landmark <span class="text-danger">*</span></label>
+                                    <div class="checkout-input-wrap">
+                                        <i class="bi bi-geo-alt-fill checkout-field-icon"></i>
+                                        <textarea id="address" name="address" rows="2" placeholder="House/Flat number, building name, street, locality" required></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="city">City <span class="text-danger">*</span></label>
+                                    <div class="checkout-input-wrap">
+                                        <i class="bi bi-building checkout-field-icon"></i>
+                                        <input id="city" name="city" type="text" placeholder="e.g. Mumbai, Bengaluru" required>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <label for="postalCode">Postal / PIN code <span class="text-danger">*</span></label>
+                                    <div class="checkout-input-wrap">
+                                        <i class="bi bi-pin-map-fill checkout-field-icon"></i>
+                                        <input id="postalCode" name="postalCode" type="text" placeholder="6-digit PIN" maxlength="6" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Delivery Speed Options -->
+                            <div class="delivery-speed-section mt-4">
+                                <label class="delivery-section-label"><i class="bi bi-truck me-1"></i> Delivery Speed</label>
+                                <div class="delivery-speed-grid">
+                                    <label class="delivery-speed-card active" id="speedStandardLabel">
+                                        <input type="radio" name="deliverySpeed" value="standard" checked>
+                                        <div class="delivery-speed-info">
+                                            <div class="d-flex justify-content-between">
+                                                <strong>Standard Delivery</strong>
+                                                <span class="delivery-price" id="standardSpeedPrice">₹149</span>
+                                            </div>
+                                            <small class="text-secondary">Delivered in 3-5 business days</small>
+                                        </div>
+                                    </label>
+                                    <label class="delivery-speed-card" id="speedExpressLabel">
+                                        <input type="radio" name="deliverySpeed" value="express">
+                                        <div class="delivery-speed-info">
+                                            <div class="d-flex justify-content-between">
+                                                <strong>Express Sanctuary Delivery</strong>
+                                                <span class="delivery-price">₹299</span>
+                                            </div>
+                                            <small class="text-secondary">Priority dispatch · 24-48 hours delivery</small>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Step 2: Payment Method Selection -->
+                        <section class="checkout-step-panel mt-4">
+                            <div class="checkout-step-header">
+                                <span class="checkout-step-num">2</span>
+                                <div>
+                                    <span class="section-kicker">PAYMENT METHOD</span>
+                                    <h2>Choose how you'd like to pay</h2>
+                                </div>
+                            </div>
+
+                            <!-- Payment Options Tabs -->
+                            <div class="payment-methods-tabs" role="tablist">
+                                <button type="button" class="payment-method-tab active" data-payment="card" role="tab" aria-selected="true">
+                                    <i class="bi bi-credit-card-2-front-fill"></i>
+                                    <span>Card</span>
+                                </button>
+                                <button type="button" class="payment-method-tab" data-payment="upi" role="tab" aria-selected="false">
+                                    <i class="bi bi-qr-code-scan"></i>
+                                    <span>UPI / QR</span>
+                                </button>
+                                <button type="button" class="payment-method-tab" data-payment="netbanking" role="tab" aria-selected="false">
+                                    <i class="bi bi-bank2"></i>
+                                    <span>Net Banking</span>
+                                </button>
+                                <button type="button" class="payment-method-tab" data-payment="cod" role="tab" aria-selected="false">
+                                    <i class="bi bi-cash-stack"></i>
+                                    <span>Pay on Delivery</span>
+                                </button>
+                            </div>
+
+                            <!-- Hidden input to store chosen payment method -->
+                            <input type="hidden" id="selectedPaymentMethod" name="paymentMethod" value="card">
+
+                            <!-- Panel 1: Credit / Debit Card -->
+                            <div id="panelCard" class="payment-panel active">
+                                <div class="card-brand-preview mb-3">
+                                    <span class="text-secondary small">Accepted cards:</span>
+                                    <div class="d-flex gap-2">
+                                        <span class="card-chip-badge" id="badgeVisa"><i class="bi bi-credit-card"></i> Visa</span>
+                                        <span class="card-chip-badge" id="badgeMastercard"><i class="bi bi-credit-card-2-back"></i> Mastercard</span>
+                                        <span class="card-chip-badge" id="badgeRupay">RuPay</span>
+                                        <span class="card-chip-badge" id="badgeAmex">Amex</span>
+                                    </div>
+                                </div>
+
+                                <div class="checkout-fields-grid">
+                                    <div class="field field-full">
+                                        <label for="cardNumber">Card number</label>
+                                        <div class="checkout-input-wrap">
+                                            <i class="bi bi-credit-card checkout-field-icon" id="cardBrandIcon"></i>
+                                            <input id="cardNumber" type="text" placeholder="4000 1234 5678 9010" maxlength="19" autocomplete="cc-number">
+                                        </div>
+                                    </div>
+
+                                    <div class="field field-full">
+                                        <label for="cardHolder">Cardholder name</label>
+                                        <div class="checkout-input-wrap">
+                                            <i class="bi bi-person checkout-field-icon"></i>
+                                            <input id="cardHolder" type="text" placeholder="Name as printed on card" autocomplete="cc-name">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label for="cardExpiry">Expiry date (MM/YY)</label>
+                                        <div class="checkout-input-wrap">
+                                            <i class="bi bi-calendar-event checkout-field-icon"></i>
+                                            <input id="cardExpiry" type="text" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp">
+                                        </div>
+                                    </div>
+
+                                    <div class="field">
+                                        <label for="cardCvv">CVV / CVC</label>
+                                        <div class="checkout-input-wrap">
+                                            <i class="bi bi-lock checkout-field-icon"></i>
+                                            <input id="cardCvv" type="password" placeholder="3 or 4 digits" maxlength="4" autocomplete="cc-csc">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <label class="d-flex align-items-center gap-2 small text-secondary cursor-pointer">
+                                        <input type="checkbox" id="saveCardCheck" checked>
+                                        <span>Securely save this card for faster sanctuary checkouts</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Panel 2: UPI / QR Code -->
+                            <div id="panelUpi" class="payment-panel d-none">
+                                <p class="small text-secondary mb-3">Pay instantly via any UPI app or scan the dynamic QR code.</p>
+                                
+                                <div class="upi-app-chips mb-3">
+                                    <button type="button" class="upi-app-chip" data-upi-app="gpay">
+                                        <i class="bi bi-google"></i> Google Pay
+                                    </button>
+                                    <button type="button" class="upi-app-chip" data-upi-app="phonepe">
+                                        <i class="bi bi-phone-fill"></i> PhonePe
+                                    </button>
+                                    <button type="button" class="upi-app-chip" data-upi-app="paytm">
+                                        <i class="bi bi-wallet2"></i> Paytm
+                                    </button>
+                                    <button type="button" class="upi-app-chip" data-upi-app="bhim">
+                                        <i class="bi bi-lightning-charge-fill"></i> BHIM UPI
+                                    </button>
+                                </div>
+
+                                <div class="field field-full mb-3">
+                                    <label for="upiId">Virtual Payment Address (VPA / UPI ID)</label>
+                                    <div class="d-flex gap-2">
+                                        <div class="checkout-input-wrap flex-grow-1">
+                                            <i class="bi bi-at checkout-field-icon"></i>
+                                            <input id="upiId" type="text" placeholder="username@oksbi, mobile@upi">
+                                        </div>
+                                        <button type="button" id="verifyUpiBtn" class="btn btn-outline-secondary px-3">Verify</button>
+                                    </div>
+                                    <span id="upiVerifyMsg" class="small mt-1 d-block"></span>
+                                </div>
+
+                                <!-- QR Code Box -->
+                                <div class="upi-qr-card p-3 rounded text-center border">
+                                    <div class="d-flex justify-content-center align-items-center gap-2 mb-2">
+                                        <i class="bi bi-qr-code text-warning fs-4"></i>
+                                        <strong class="small">Scan &amp; Pay on Mobile</strong>
+                                    </div>
+                                    <div class="upi-qr-placeholder mx-auto my-2">
+                                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=upi://pay?pa=avyora@sanctuary&pn=AVYORA%20Luxury&cu=INR" alt="UPI QR Code" class="img-fluid rounded border p-1 bg-white">
+                                    </div>
+                                    <small class="text-secondary d-block">Scan with any UPI app to approve payment immediately.</small>
+                                </div>
+                            </div>
+
+                            <!-- Panel 3: Net Banking -->
+                            <div id="panelNetbanking" class="payment-panel d-none">
+                                <p class="small text-secondary mb-3">Select your bank to authenticate securely through your internet banking portal.</p>
+                                <div class="bank-chips-grid mb-3">
+                                    <label class="bank-chip active">
+                                        <input type="radio" name="selectedBank" value="HDFC Bank" checked>
+                                        <span><i class="bi bi-bank"></i> HDFC Bank</span>
+                                    </label>
+                                    <label class="bank-chip">
+                                        <input type="radio" name="selectedBank" value="ICICI Bank">
+                                        <span><i class="bi bi-bank"></i> ICICI Bank</span>
+                                    </label>
+                                    <label class="bank-chip">
+                                        <input type="radio" name="selectedBank" value="State Bank of India">
+                                        <span><i class="bi bi-bank"></i> SBI</span>
+                                    </label>
+                                    <label class="bank-chip">
+                                        <input type="radio" name="selectedBank" value="Axis Bank">
+                                        <span><i class="bi bi-bank"></i> Axis Bank</span>
+                                    </label>
+                                    <label class="bank-chip">
+                                        <input type="radio" name="selectedBank" value="Kotak Mahindra">
+                                        <span><i class="bi bi-bank"></i> Kotak</span>
+                                    </label>
+                                </div>
+
+                                <div class="field field-full">
+                                    <label for="allBanksSelect">All other banks</label>
+                                    <select id="allBanksSelect" class="form-select">
+                                        <option value="">Choose another bank...</option>
+                                        <option value="Bank of Baroda">Bank of Baroda</option>
+                                        <option value="Punjab National Bank">Punjab National Bank</option>
+                                        <option value="Canara Bank">Canara Bank</option>
+                                        <option value="Union Bank of India">Union Bank of India</option>
+                                        <option value="IndusInd Bank">IndusInd Bank</option>
+                                        <option value="IDBI Bank">IDBI Bank</option>
+                                        <option value="Federal Bank">Federal Bank</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Panel 4: Cash on Delivery -->
+                            <div id="panelCod" class="payment-panel d-none">
+                                <div class="cod-notice p-3 rounded border mb-3">
+                                    <div class="d-flex align-items-start gap-3">
+                                        <i class="bi bi-cash-coin fs-3 text-warning"></i>
+                                        <div>
+                                            <strong class="d-block mb-1">Pay with Cash or UPI at Doorstep</strong>
+                                            <p class="small text-secondary mb-0">Our executive will deliver your order in sealed sanctuary packaging. You can pay via cash or scan the delivery QR code on arrival.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field field-full">
+                                    <label for="codVerification">Human Verification Code: <strong id="codCaptchaText" class="badge bg-secondary ms-2 fs-6">8492</strong></label>
+                                    <div class="d-flex gap-2">
+                                        <input id="codVerification" type="text" placeholder="Enter the code shown above" maxlength="4" class="form-control" style="max-width: 220px;">
+                                        <button type="button" id="refreshCaptchaBtn" class="btn btn-outline-secondary" title="Refresh code"><i class="bi bi-arrow-clockwise"></i></button>
+                                    </div>
+                                    <span id="codErrorMsg" class="text-danger small mt-1 d-block"></span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Step 3: Exclusive Companion Bundle Offer -->
+                        <section class="checkout-step-panel mt-4" id="checkoutBundleSection">
+                            <div class="checkout-step-header d-flex justify-content-between align-items-start flex-wrap gap-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="checkout-step-num">3</span>
+                                    <div>
+                                        <span class="section-kicker">SPECIAL CHECKOUT RITUAL</span>
+                                        <h2>Claim your companion bundle (Save 15%)</h2>
+                                        <p class="small text-secondary mb-0">Select strictly 3 companion essentials curated to complement your bag.</p>
+                                    </div>
+                                </div>
+                                <div class="bundle-status-badge d-flex align-items-center gap-2">
+                                    <span class="badge bg-warning text-dark px-3 py-2 fw-bold">15% BUNDLE SAVINGS</span>
+                                </div>
+                            </div>
+
+                            <!-- Interactive Progress & Validation Header -->
+                            <div class="checkout-bundle-tracker mt-3 p-3 rounded border">
+                                <div class="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <i class="bi bi-box-seam text-warning fs-5"></i>
+                                        <span class="fw-bold small" id="checkoutBundleCounterText">Selected: 0 of 3 items</span>
+                                    </div>
+                                    <div class="bundle-steps-pills d-flex gap-2">
+                                        <span class="bundle-slot-pill" id="bundleSlot1">Item 1</span>
+                                        <span class="bundle-slot-pill" id="bundleSlot2">Item 2</span>
+                                        <span class="bundle-slot-pill" id="bundleSlot3">Item 3</span>
+                                    </div>
+                                </div>
+
+                                <!-- Validation Alert Message (for less than 3 or more than 3) -->
+                                <div id="bundleValidationAlert" class="alert alert-warning py-2 px-3 mb-0 d-none" role="alert">
+                                    <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                                    <span id="bundleValidationText">You have to select 3 items only.</span>
+                                </div>
+                            </div>
+
+                            <!-- 6 Complementary Products Grid -->
+                            <div class="checkout-bundle-grid row g-3 mt-1" id="checkoutBundleProducts">
+                                <!-- Rendered dynamically with 6 products -->
+                            </div>
+
+                            <!-- Bundle Claim Action Bar -->
+                            <div class="checkout-bundle-claim-bar mt-3 p-3 rounded border d-flex justify-content-between align-items-center flex-wrap gap-3">
+                                <div>
+                                    <div class="small text-secondary">Bundle subtotal (with 15% discount):</div>
+                                    <div class="d-flex align-items-baseline gap-2">
+                                        <strong class="fs-5 text-success" id="checkoutBundleTotal">₹0</strong>
+                                        <span class="text-secondary small text-decoration-line-through" id="checkoutBundleOriginal">₹0</span>
+                                        <span class="badge bg-success-subtle text-success small" id="checkoutBundleSavings">Save ₹0</span>
+                                    </div>
+                                </div>
+                                <div class="d-flex gap-2 align-items-center">
+                                    <button type="button" class="btn btn-warning fw-bold px-4" id="claimCheckoutBundleBtn">
+                                        <i class="bi bi-gift-fill me-1"></i> Claim 3-Item Bundle
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <p id="checkoutErrorMessage" class="text-danger small mt-3 mb-0" role="alert"></p>
+
+                        <!-- Primary Submit Button -->
+                        <button type="submit" class="btn btn-avyora checkout-button mt-4" id="checkoutButton">
+                            <span class="btn-shine"></span>
+                            <span class="btn-content d-flex align-items-center justify-content-center gap-2">
+                                <span id="checkoutBtnLabel">Pay ₹0 Securely</span>
+                                <i class="bi bi-shield-lock-fill"></i>
+                            </span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right Sidebar: Order Summary & Item Previews -->
                 <aside class="cart-page-summary checkout-summary">
-                    <span class="section-kicker">YOUR ORDER</span>
+                    <span class="section-kicker">YOUR SANCTUARY BAG</span>
                     <h3>Order summary</h3>
+
+                    <!-- Order Items Mini Preview -->
+                    <div id="checkoutItemsList" class="checkout-items-list mb-3">
+                        <!-- Filled dynamically by JavaScript -->
+                    </div>
+
+                    <!-- Promo Coupon Code Box -->
+                    <div class="checkout-coupon-box mb-3">
+                        <label class="small text-secondary mb-1">Have a promo code?</label>
+                        <div class="d-flex gap-2">
+                            <input type="text" id="couponCodeInput" class="form-control form-control-sm text-uppercase" placeholder="e.g. WELCOME10">
+                            <button type="button" id="applyCouponBtn" class="btn btn-dark btn-sm px-3">Apply</button>
+                        </div>
+                        <div id="couponFeedback" class="small mt-1 d-none"></div>
+                    </div>
+
                     <div class="cart-summary-row"><span>Subtotal</span><strong id="checkoutSubtotal">₹0</strong></div>
-                    <div class="cart-summary-row"><span>Shipping</span><strong id="checkoutShipping">₹0</strong></div>
+                    <div class="cart-summary-row"><span>Shipping fee</span><strong id="checkoutShipping">₹0</strong></div>
+                    <div class="cart-summary-row text-success" id="couponRow" style="display: none;">
+                        <span>Promo discount (<span id="couponTag"></span>)</span>
+                        <strong id="checkoutCouponDiscount">- ₹0</strong>
+                    </div>
                     <div class="cart-summary-row"><span>Savings</span><strong id="checkoutSavings">- ₹0</strong></div>
-                    <div class="cart-summary-row total"><span>Total</span><strong id="checkoutTotal">₹0</strong></div>
-                    <p class="checkout-summary-note"><i class="bi bi-shield-check"></i> Your order is protected by Avyora's 30-day return promise.</p>
+                    <div class="cart-summary-row total"><span>Total payable</span><strong id="checkoutTotal">₹0</strong></div>
+
+                    <!-- Trust & Guarantee Assurances -->
+                    <div class="checkout-trust-badges mt-4">
+                        <div class="trust-badge-item">
+                            <i class="bi bi-shield-check text-success"></i>
+                            <span>100% Authentic Luxury &amp; Curated Verification</span>
+                        </div>
+                        <div class="trust-badge-item">
+                            <i class="bi bi-arrow-counterclockwise text-primary"></i>
+                            <span>Effortless 30-Day Sanctuary Returns</span>
+                        </div>
+                        <div class="trust-badge-item">
+                            <i class="bi bi-lock-fill text-warning"></i>
+                            <span>Bank-Grade 256-Bit SSL Encrypted Gateway</span>
+                        </div>
+                    </div>
                 </aside>
             </div>
         </div>
     </main>
 
-    <footer class="product-detail-footer"><div class="container"><span>AVYORA</span><a href="index.html">Continue shopping <i class="bi bi-arrow-right"></i></a></div></footer>
+    <!-- Bank Gateway Authorization Simulation Modal -->
+    <div id="paymentProcessingModal" class="payment-processing-backdrop d-none" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="payment-processing-card text-center">
+            <div class="gateway-lock-ring mb-3">
+                <i class="bi bi-shield-lock-fill gateway-lock-icon"></i>
+            </div>
+            <h4 class="mb-2">Connecting to Secure Payment Gateway</h4>
+            <p class="text-secondary small mb-3">Please do not refresh or close this window while we authorize your transaction with the bank...</p>
+            <div class="gateway-progress-bar">
+                <div class="gateway-progress-fill"></div>
+            </div>
+            <div class="d-flex justify-content-between text-muted small mt-2">
+                <span><i class="bi bi-lock"></i> 256-bit TLS</span>
+                <span id="gatewayStatusText">Authorizing...</span>
+            </div>
+        </div>
+    </div>
+
+    <footer class="product-detail-footer">
+        <div class="container d-flex justify-content-between align-items-center">
+            <span>AVYORA Luxury Sanctuary</span>
+            <a href="index.html">Continue shopping <i class="bi bi-arrow-right"></i></a>
+        </div>
+    </footer>
 
     <script type="module" src="/src/main.js"></script>
     <script type="module" src="/src/theme.js"></script>

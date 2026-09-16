@@ -19,10 +19,23 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNavbar">
-                <ul class="navbar-nav ms-auto align-items-lg-center gap-3">
+                <form class="d-flex mx-lg-auto my-3 my-lg-0 universal-search-form" data-product-search-form style="max-width: 500px; width: 100%; position: relative;">
+                    <div class="input-group">
+                        <input type="search" class="form-control" placeholder="Search products, pages (e.g. cart, account, home)..." aria-label="Search products and pages" autocomplete="off">
+                        <button class="btn btn-avyora" type="submit" aria-label="Search">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+                <ul class="navbar-nav ms-lg-4 align-items-lg-center gap-3">
                     <li class="nav-item"><a href="index.html" class="nav-link text-dark">Home</a></li>
                     <li class="nav-item"><a href="favorites.html" class="nav-link text-dark">Wishlist</a></li>
                     <li class="nav-item"><a href="cart.html" class="nav-link text-dark">Cart</a></li>
+                    <li class="nav-item">
+                        <a href="account.html" class="nav-link text-dark icon-btn active" title="Account" aria-label="Account">
+                            <i class="bi bi-person-circle"></i>
+                        </a>
+                    </li>
                     <li class="nav-item"><button class="theme-button" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Theme settings" title="Theme settings"><i id="themeIcon" class="bi bi-sun"></i></button>
                         <div class="dropdown-menu dropdown-menu-end theme-dropdown p-3">
                             <h6 class="fw-bold mb-3">Appearance</h6>
@@ -59,9 +72,27 @@
                 <div id="accountOrder" class="account-dashboard" hidden>
                     <aside class="account-sidebar">
                         <div class="account-profile-card">
-                            <div class="account-avatar"><img id="accountAvatarImage" alt="Profile photo" hidden><i id="accountAvatarIcon" class="bi bi-person"></i></div>
+                            <div class="account-avatar-wrapper">
+                                <button type="button" id="accountAvatarControl" class="account-avatar" aria-label="Add your photo" title="Add your photo">
+                                    <img id="accountAvatarImage" alt="Profile photo" hidden>
+                                    <div id="accountAvatarEmpty" class="account-avatar-empty">
+                                        <i id="accountAvatarIcon" class="bi bi-person"></i>
+                                        <span class="account-avatar-label">Add your photo</span>
+                                    </div>
+                                    <div id="accountAvatarOverlay" class="account-avatar-overlay" aria-hidden="true">
+                                        <i class="bi bi-camera-fill"></i>
+                                        <span id="accountAvatarOverlayText" class="account-avatar-overlay-text">Add your pic</span>
+                                    </div>
+                                </button>
+                                <button type="button" id="accountAvatarBadge" class="account-avatar-badge" aria-label="Upload photo" title="Add your photo">
+                                    <i class="bi bi-camera-fill"></i>
+                                </button>
+                            </div>
                             <input id="accountPhotoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
-                            <button id="accountPhotoButton" type="button" class="account-photo-button"><i class="bi bi-camera"></i> Add profile photo</button>
+                            <div class="account-photo-actions">
+                                <button id="accountPhotoButton" type="button" class="account-photo-button"><i class="bi bi-camera"></i> Add profile photo</button>
+                                <button id="accountPhotoRemoveButton" type="button" class="account-photo-remove-btn" hidden><i class="bi bi-trash3"></i> Remove</button>
+                            </div>
                             <h2 class="account-profile-name" id="accountCustomer">AVYORA shopper</h2>
                             <p class="account-profile-email" id="accountEmail"></p>
                             <span class="account-member-badge"><i class="bi bi-stars"></i> Avyora member</span>
