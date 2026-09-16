@@ -73,6 +73,12 @@
         rel="stylesheet"
         href="/src/style.css">
 
+    <script>
+        if (!localStorage.getItem("avyora-session")) {
+            window.location.replace("register.html");
+        }
+    </script>
+
 </head>
 
 
@@ -460,20 +466,6 @@
 
                             </div>
 
-                            <div class="style-quiz" id="styleQuiz">
-                                <div class="style-quiz-heading">
-                                    <span class="section-kicker">FIND YOUR EDIT</span>
-                                    <span class="style-quiz-step" id="styleQuizStep">1 / 3</span>
-                                </div>
-                                <h2 id="styleQuizQuestion">What are you shopping for today?</h2>
-                                <div class="style-quiz-options" id="styleQuizOptions">
-                                    <button type="button" data-quiz-value="power" data-quiz-filter="electronics"><i class="bi bi-lightning-charge"></i><span>Useful upgrades</span></button>
-                                    <button type="button" data-quiz-value="style" data-quiz-filter="womenswear"><i class="bi bi-stars"></i><span>A little polish</span></button>
-                                    <button type="button" data-quiz-value="home" data-quiz-filter="home"><i class="bi bi-house-heart"></i><span>Make home better</span></button>
-                                </div>
-                                <p class="style-quiz-result" id="styleQuizResult" hidden></p>
-                            </div>
-
                             <div class="hero-quick-info"></div>
 
                         </div>
@@ -536,6 +528,45 @@
 
         </section>
 
+        <section class="style-quiz-section" aria-labelledby="styleQuizTitle">
+            <div class="container">
+                <div class="style-quiz" id="styleQuiz">
+                    <div class="style-quiz-heading">
+                        <div>
+                            <span class="section-kicker">NOT SURE WHERE TO START?</span>
+                            <h2 id="styleQuizTitle">Tell us what you need.</h2>
+                            <p class="style-quiz-intro">Choose one answer at each step. We’ll take you to the products that fit best.</p>
+                        </div>
+                        <span class="style-quiz-step" id="styleQuizStep">1 / 3</span>
+                    </div>
+                    <p class="style-quiz-prompt" id="styleQuizQuestion">What are you shopping for today?</p>
+                    <div class="style-quiz-options" id="styleQuizOptions">
+                        <button type="button" data-quiz-value="power" data-quiz-filter="electronics"><i class="bi bi-lightning-charge"></i><span>Useful upgrades</span></button>
+                        <button type="button" data-quiz-value="style" data-quiz-filter="womenswear"><i class="bi bi-stars"></i><span>A little polish</span></button>
+                        <button type="button" data-quiz-value="home" data-quiz-filter="home"><i class="bi bi-house-heart"></i><span>Make home better</span></button>
+                    </div>
+                    <p class="style-quiz-result" id="styleQuizResult" hidden></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-bundle-section" aria-labelledby="bundleSectionTitle">
+            <div class="container">
+                <div class="product-bundle-section-heading">
+                    <div>
+                        <span class="section-kicker">SHOP MORE, SAVE MORE</span>
+                        <h2 id="bundleSectionTitle">Build a bundle for your routine.</h2>
+                    </div>
+                    <p>Choose up to three products and save 15% when you buy them together.</p>
+                </div>
+                <div class="product-bundle-panel">
+                    <div class="product-bundle-intro"><span class="section-kicker">BUILD YOUR OWN BUNDLE</span><h3>Complete the ritual <span>+</span></h3><p>Choose up to three favorites and save 15% together.</p></div>
+                    <div id="bundleProducts" class="product-bundle-items"></div>
+                    <div class="product-bundle-total"><span id="bundleSelectionLabel">3 items selected</span><strong id="bundleTotal">$0.00</strong><button class="btn btn-avyora" id="claimBundleButton" type="button"><i class="bi bi-box-seam"></i> Claim bundle</button></div>
+                </div>
+            </div>
+        </section>
+
 
         <!-- ==================================================
              PRODUCT EDIT
@@ -579,36 +610,9 @@
                     </div>
                 </div>
 
-                <div class="product-feature-panel">
-                    <div class="product-feature-visual">
-                        <span class="product-feature-label">AVYORA EXCLUSIVE</span>
-                        <img id="featuredProductImage" src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="Featured Avyora product">
-                        <div class="product-feature-stamp"><i class="bi bi-stars"></i> Staff favorite</div>
-                        <button class="featured-slide-control featured-slide-prev" type="button" data-featured-prev aria-label="Previous featured product"><i class="bi bi-arrow-left"></i></button>
-                        <button class="featured-slide-control featured-slide-next" type="button" data-featured-next aria-label="Next featured product"><i class="bi bi-arrow-right"></i></button>
-                        <div class="featured-slide-dots" id="featuredSlideDots" aria-label="Featured product slides"></div>
-                    </div>
-                    <div class="product-feature-info">
-                        <span class="product-feature-eyebrow">THE EVERYDAY EDITION</span>
-                        <h3 id="featuredProductTitle">The piece you'll reach for every day.</h3>
-                        <p id="featuredProductDescription">A considered favorite with beautiful details, practical function, and a place in your daily ritual.</p>
-                        <div class="product-feature-rating"><i class="bi bi-star-fill"></i> <strong id="featuredProductRating">4.8</strong> <span>from verified shoppers</span></div>
-                        <div class="product-feature-price"><strong id="featuredProductPrice">$109.95</strong> <del id="featuredProductOldPrice">$129.95</del> <span>LIMITED EDITION</span></div>
-                        <div class="product-feature-options"><span>SELECT YOUR FINISH</span><button class="product-swatch active" type="button" aria-label="Warm clay finish"></button><button class="product-swatch dark" type="button" aria-label="Midnight finish"></button><button class="product-swatch light" type="button" aria-label="Cloud finish"></button></div>
-                        <div class="product-feature-actions"><button class="btn btn-avyora product-add-button" type="button"><i class="bi bi-bag-plus"></i> Add to bag</button><button class="product-secondary-action" type="button" data-quick-view="featured"><i class="bi bi-arrows-angle-expand"></i> Quick view</button></div>
-                        <div class="product-feature-benefits"><span><i class="bi bi-truck"></i> Free shipping</span><span><i class="bi bi-arrow-repeat"></i> 30-day returns</span></div>
-                    </div>
-                </div>
-
                 <div class="product-grid-heading"><div><span class="section-kicker">SHOP THE COLLECTION</span><h3>Curated capsule lots</h3></div><span class="product-grid-note">Tap a heart to save a favorite <i class="bi bi-heart"></i></span></div>
                 <div id="productGrid" class="row g-4 product-grid product-grid-view"></div>
                 <p id="productEmptyState" class="product-empty-state" hidden>No products match your search. Try another phrase or category.</p>
-
-                <div class="product-bundle-panel">
-                    <div class="product-bundle-intro"><span class="section-kicker">BUILD YOUR OWN BUNDLE</span><h3>Complete the ritual <span>+</span></h3><p>Choose up to three favorites and save 15% together.</p></div>
-                    <div id="bundleProducts" class="product-bundle-items"></div>
-                    <div class="product-bundle-total"><span id="bundleSelectionLabel">3 items selected</span><strong id="bundleTotal">$0.00</strong><button class="btn btn-avyora" id="claimBundleButton" type="button"><i class="bi bi-box-seam"></i> Claim bundle</button></div>
-                </div>
 
                 <div class="product-trust-strip">
                     <div><i class="bi bi-shield-check"></i><span><strong>30-day in-home trial</strong>Try it comfortably, return it simply.</span></div>
@@ -649,7 +653,7 @@
             <div class="cart-drawer-body" id="cartDrawerBody"></div>
             <div class="cart-drawer-footer">
                 <div class="cart-drawer-total"><span>Subtotal</span><strong id="cartDrawerTotal">₹0</strong></div>
-                <a class="btn btn-avyora cart-drawer-checkout" href="cart.html">Go to checkout <i class="bi bi-arrow-right"></i></a>
+                <a class="btn btn-avyora cart-drawer-checkout" href="cart.html">Go to your cart <i class="bi bi-arrow-right"></i></a>
             </div>
         </aside>
         <div class="cart-drawer-backdrop" data-cart-close></div>
@@ -799,7 +803,7 @@
 
                                 <li>
 
-                                    <a href="categories.html?cat=electronics">
+                                    <a href="index.html?category=electronics#product-edit">
                                         Electronics
                                     </a>
 
@@ -808,7 +812,7 @@
 
                                 <li>
 
-                                    <a href="categories.html?cat=fashion">
+                                    <a href="index.html?category=womenswear#product-edit">
                                         Fashion & Apparel
                                     </a>
 
@@ -817,7 +821,7 @@
 
                                 <li>
 
-                                    <a href="categories.html?cat=home">
+                                    <a href="index.html?category=home#product-edit">
                                         Home & Living
                                     </a>
 
@@ -826,7 +830,7 @@
 
                                 <li>
 
-                                    <a href="categories.html?cat=beauty">
+                                    <a href="index.html?category=beauty#product-edit">
                                         Beauty & Care
                                     </a>
 
@@ -835,7 +839,7 @@
 
                                 <li>
 
-                                    <a href="categories.html?cat=sports">
+                                    <a href="index.html?category=sports#product-edit">
                                         Sports & Fitness
                                     </a>
 

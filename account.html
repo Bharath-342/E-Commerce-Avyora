@@ -41,9 +41,12 @@
         <section class="account-page-section">
             <div class="container">
                 <div class="account-page-header">
-                    <span class="section-kicker">YOUR AVYORA SPACE</span>
-                    <h1>My account</h1>
-                    <p>Keep an eye on your latest order and your shopping details.</p>
+                    <div>
+                        <span class="section-kicker">YOUR AVYORA SPACE</span>
+                        <h1>My account</h1>
+                        <p>Everything you need for a smoother, more personal shopping experience.</p>
+                    </div>
+                    <a href="index.html" class="account-continue-link">Continue shopping <i class="bi bi-arrow-up-right"></i></a>
                 </div>
 
                 <div id="accountEmpty" class="account-empty" hidden>
@@ -53,26 +56,127 @@
                     <a href="index.html" class="btn btn-avyora">Start shopping</a>
                 </div>
 
-                <div id="accountOrder" class="account-layout" hidden>
-                    <section class="account-panel">
-                        <div class="account-avatar"><i class="bi bi-person"></i></div>
-                        <h2 class="account-profile-name" id="accountCustomer">AVYORA shopper</h2>
-                        <p class="account-profile-email" id="accountEmail"></p>
-                        <a href="favorites.html" class="btn btn-outline-avyora mt-4">View wishlist <i class="bi bi-arrow-right"></i></a>
-                    </section>
-
-                    <section class="account-panel">
-                        <span class="account-order-status"><i class="bi bi-check-circle"></i> Order confirmed</span>
-                        <h2 class="mt-3 mb-0">Latest order</h2>
-                        <p class="account-order-meta">Thanks for choosing AVYORA. Your order is being prepared.</p>
-                        <div class="account-order-grid">
-                            <div><span>Order ID</span><strong id="accountOrderId">--</strong></div>
-                            <div><span>Placed</span><strong id="accountOrderDate">--</strong></div>
-                            <div><span>Items</span><strong id="accountOrderItems">0 items</strong></div>
-                            <div><span>Total</span><strong id="accountOrderTotal">₹0</strong></div>
+                <div id="accountOrder" class="account-dashboard" hidden>
+                    <aside class="account-sidebar">
+                        <div class="account-profile-card">
+                            <div class="account-avatar"><img id="accountAvatarImage" alt="Profile photo" hidden><i id="accountAvatarIcon" class="bi bi-person"></i></div>
+                            <input id="accountPhotoInput" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+                            <button id="accountPhotoButton" type="button" class="account-photo-button"><i class="bi bi-camera"></i> Add profile photo</button>
+                            <h2 class="account-profile-name" id="accountCustomer">AVYORA shopper</h2>
+                            <p class="account-profile-email" id="accountEmail"></p>
+                            <span class="account-member-badge"><i class="bi bi-stars"></i> Avyora member</span>
+                            <button id="accountLogoutButton" type="button" class="account-logout-button"><i class="bi bi-box-arrow-right"></i> Sign out</button>
                         </div>
-                        <a href="success.html" class="btn btn-avyora mt-4">View confirmation <i class="bi bi-arrow-right"></i></a>
-                    </section>
+                        <nav class="account-menu" aria-label="Account navigation">
+                            <a class="active" href="#accountOrder"><i class="bi bi-grid-1x2"></i> Overview</a>
+                            <a href="success.html"><i class="bi bi-bag-check"></i> Orders</a>
+                            <a href="favorites.html"><i class="bi bi-heart"></i> Wishlist</a>
+                            <a href="cart.html"><i class="bi bi-bag"></i> Shopping bag</a>
+                        </nav>
+                        <div class="account-help-card">
+                            <i class="bi bi-headset"></i>
+                            <strong>Need a hand?</strong>
+                            <span>Our customer care team is here for you.</span>
+                            <a href="mailto:hello@avyora.com">Contact support <i class="bi bi-arrow-up-right"></i></a>
+                        </div>
+                    </aside>
+
+                    <div class="account-content">
+                        <div class="account-welcome-row">
+                            <div>
+                                <span class="section-kicker">ACCOUNT OVERVIEW</span>
+                                <h2>Good to see you, <span id="accountWelcomeName">there</span>.</h2>
+                            </div>
+                            <a href="favorites.html" class="btn btn-outline-avyora">View wishlist <i class="bi bi-arrow-right"></i></a>
+                        </div>
+
+                        <section class="account-panel account-details-panel">
+                            <div class="account-panel-heading">
+                                <div>
+                                    <span class="section-kicker">YOUR DETAILS</span>
+                                    <h2>Personal information</h2>
+                                </div>
+                                <button id="accountEditButton" type="button" class="btn btn-outline-avyora account-edit-button"><i class="bi bi-pencil"></i> Edit details</button>
+                            </div>
+                            <div id="accountProfileSummary" class="account-profile-summary">
+                                <div><span>Full name</span><strong id="accountSummaryName">Not added</strong></div>
+                                <div><span>Email address</span><strong id="accountSummaryEmail">Not added</strong></div>
+                                <div><span>Phone number</span><strong id="accountSummaryPhone">Not added</strong></div>
+                                <div><span>Date of birth</span><strong id="accountSummaryDob">Not added</strong></div>
+                                <div class="account-summary-wide"><span>Address</span><strong id="accountSummaryAddress">Not added</strong></div>
+                                <div><span>City</span><strong id="accountSummaryCity">Not added</strong></div>
+                            </div>
+                            <form id="accountProfileForm" class="account-profile-form" hidden>
+                                <div class="account-form-field">
+                                    <label for="accountFullName">Full name</label>
+                                    <input id="accountFullName" name="fullName" type="text" placeholder="Your full name" autocomplete="name" required>
+                                </div>
+                                <div class="account-form-field">
+                                    <label for="accountEmailInput">Email address</label>
+                                    <input id="accountEmailInput" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+                                </div>
+                                <div class="account-form-field">
+                                    <label for="accountPhone">Phone number</label>
+                                    <input id="accountPhone" name="phone" type="tel" placeholder="+91 98765 43210" autocomplete="tel">
+                                </div>
+                                <div class="account-form-field">
+                                    <label for="accountDob">Date of birth</label>
+                                    <input id="accountDob" name="dateOfBirth" type="date" autocomplete="bday">
+                                </div>
+                                <div class="account-form-field account-form-field-wide">
+                                    <label for="accountAddress">Address</label>
+                                    <textarea id="accountAddress" name="address" placeholder="Your delivery address" autocomplete="street-address" rows="3"></textarea>
+                                </div>
+                                <div class="account-form-field">
+                                    <label for="accountCity">City</label>
+                                    <input id="accountCity" name="city" type="text" placeholder="Your city" autocomplete="address-level2">
+                                </div>
+                                <div class="account-form-actions">
+                                    <span id="accountProfileMessage" role="status" aria-live="polite"></span>
+                                    <button type="submit" class="btn btn-avyora">Save changes <i class="bi bi-check2"></i></button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <div class="account-stats-grid">
+                            <div class="account-stat"><span>Total orders</span><strong>01</strong><small>Your latest purchase</small></div>
+                            <div class="account-stat"><span>Wishlist items</span><strong>--</strong><small>Ready when you are</small></div>
+                            <div class="account-stat"><span>Member since</span><strong>2026</strong><small>Welcome to Avyora</small></div>
+                        </div>
+
+                        <section class="account-panel account-order-panel">
+                            <div class="account-panel-heading">
+                                <div>
+                                    <span class="section-kicker">MOST RECENT</span>
+                                    <h2>Latest order</h2>
+                                </div>
+                                <span id="accountOrderStatus" class="account-order-status"><i class="bi bi-check-circle"></i> Confirmed</span>
+                            </div>
+                            <div class="account-order-summary">
+                                <div><span>Order ID</span><strong id="accountOrderId">--</strong></div>
+                                <div><span>Placed</span><strong id="accountOrderDate">--</strong></div>
+                                <div><span>Items</span><strong id="accountOrderItems">0 items</strong></div>
+                                <div><span>Total</span><strong id="accountOrderTotal">₹0</strong></div>
+                            </div>
+                            <div id="accountProgress" class="account-progress" aria-label="Order progress">
+                                <div class="account-progress-line"><span></span></div>
+                                <div class="account-progress-step complete"><i class="bi bi-check2"></i><span>Confirmed</span></div>
+                                <div class="account-progress-step complete"><i class="bi bi-box-seam"></i><span>Preparing</span></div>
+                                <div class="account-progress-step"><i class="bi bi-truck"></i><span>On the way</span></div>
+                                <div class="account-progress-step"><i class="bi bi-house-check"></i><span>Delivered</span></div>
+                            </div>
+                            <div class="account-order-footer">
+                                <p id="accountOrderNote"><i class="bi bi-info-circle"></i> Thanks for choosing AVYORA. Your order is being prepared.</p>
+                                <a id="accountOrderLink" href="success.html">View confirmation <i class="bi bi-arrow-right"></i></a>
+                            </div>
+                        </section>
+
+                        <div class="account-benefits-grid">
+                            <div class="account-benefit"><i class="bi bi-arrow-repeat"></i><div><strong>30-day returns</strong><span>Shop with confidence.</span></div></div>
+                            <div class="account-benefit"><i class="bi bi-shield-check"></i><div><strong>Secure checkout</strong><span>Your details stay protected.</span></div></div>
+                            <div class="account-benefit"><i class="bi bi-chat-heart"></i><div><strong>Personal support</strong><span>We are happy to help.</span></div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

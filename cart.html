@@ -129,9 +129,10 @@
             <div class="container">
 
                 <div class="cart-page-header">
-                    <div class="cart-page-breadcrumb">Home <span>/</span> Cart</div>
+                    <div class="cart-page-breadcrumb"><a href="index.html">Home</a> <span>/</span> Cart</div>
                     <h1 class="cart-page-title">Your cart</h1>
-                    <p class="cart-page-subtitle">Review your picks, adjust quantities, and finish checkout in a few taps.</p>
+                    <p class="cart-page-subtitle">Review your picks and adjust quantities before moving to checkout.</p>
+                    <p class="cart-selection-note"><i class="bi bi-check2-square"></i> Select the checkbox next to every item you want to buy. Unchecked items stay in your cart for later.</p>
                 </div>
 
                 <div class="cart-page-layout">
@@ -170,31 +171,7 @@
                             <strong id="checkoutTotal">₹0</strong>
                         </div>
 
-                        <form id="checkoutForm" class="checkout-form" novalidate>
-                            <div class="field">
-                                <label for="fullName">Full name</label>
-                                <input id="fullName" name="fullName" type="text" placeholder="Enter your full name" required>
-                            </div>
-
-                            <div class="field">
-                                <label for="email">Email</label>
-                                <input id="email" name="email" type="email" placeholder="you@example.com" required>
-                            </div>
-
-                            <div class="field">
-                                <label for="address">Address</label>
-                                <textarea id="address" name="address" placeholder="Your delivery address" required></textarea>
-                            </div>
-
-                            <div class="field">
-                                <label for="city">City</label>
-                                <input id="city" name="city" type="text" placeholder="City" required>
-                            </div>
-
-                            <button type="submit" class="btn btn-avyora checkout-button" id="checkoutButton">Place order</button>
-                        </form>
-
-                        <div id="checkoutSuccess" class="checkout-success" hidden></div>
+                        <a href="checkout.html" class="btn btn-avyora checkout-button" id="checkoutButton">Proceed to checkout <i class="bi bi-arrow-right"></i></a>
                     </aside>
 
                 </div>
@@ -226,7 +203,7 @@
             <div class="cart-drawer-body" id="cartDrawerBody"></div>
             <div class="cart-drawer-footer">
                 <div class="cart-drawer-total"><span>Subtotal</span><strong id="cartDrawerTotal">₹0</strong></div>
-                <a class="btn btn-avyora cart-drawer-checkout" href="cart.html">Go to checkout <i class="bi bi-arrow-right"></i></a>
+                <a class="btn btn-avyora cart-drawer-checkout" href="cart.html">Go to your cart <i class="bi bi-arrow-right"></i></a>
             </div>
         </aside>
         <div class="cart-drawer-backdrop" data-cart-close></div>

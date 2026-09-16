@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVYORA - Create account</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body class="auth-page">
+    <nav class="navbar navbar-expand-lg fixed-top border-bottom">
+        <div class="container"><a href="index.html" class="navbar-brand"><img src="/avyora-logo.png" alt="AVYORA" class="brand-logo theme-logo"></a><a href="login.html" class="auth-nav-link">Already a member? Sign in <i class="bi bi-arrow-up-right"></i></a></div>
+    </nav>
+    <main class="auth-page-section">
+        <div class="auth-motion-layer" aria-hidden="true"><span class="auth-motion-ring auth-motion-ring-one"></span><span class="auth-motion-ring auth-motion-ring-two"></span><span class="auth-motion-spark auth-motion-spark-one"></span><span class="auth-motion-spark auth-motion-spark-two"></span><span class="auth-floating-item auth-floating-item-one"><img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=220&q=75" alt=""></span><span class="auth-floating-item auth-floating-item-two"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=220&q=75" alt=""></span><span class="auth-floating-item auth-floating-item-three"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=220&q=75" alt=""></span></div>
+        <div class="container">
+            <div class="auth-layout">
+                <div class="auth-intro auth-reveal-intro"><span class="section-kicker">WELCOME TO AVYORA</span><h1>Make room for the things you love.</h1><p>Create your account to save your details, track orders, and keep your favorite finds close.</p><div class="auth-showcase" aria-hidden="true"><div class="auth-showcase-label"><span>THE AVYORA EDIT</span><i class="bi bi-arrow-up-right"></i></div><div class="auth-showcase-art"><div class="auth-showcase-orbit"></div><div class="auth-showcase-card auth-showcase-card-one"><img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80" alt=""></div><div class="auth-showcase-card auth-showcase-card-two"><img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=500&q=80" alt=""></div><div class="auth-showcase-card auth-showcase-card-three"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=500&q=80" alt=""></div><span class="auth-showcase-word">find<br>your<br>favourite</span></div></div><div class="auth-intro-note"><i class="bi bi-stars"></i><span>Personalized shopping, thoughtfully brought together.</span></div></div>
+                <section class="auth-card auth-reveal-card">
+                    <span class="section-kicker">NEW HERE?</span><h2>Create your account</h2><p class="auth-card-subtitle">Join AVYORA in just a few moments.</p>
+                    <form id="registerForm" class="auth-form" novalidate>
+                        <div class="auth-field"><label for="registerName">Full name</label><input id="registerName" name="fullName" type="text" placeholder="Your full name" autocomplete="name" required></div>
+                        <div class="auth-field"><label for="registerEmail">Email address</label><input id="registerEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required></div>
+                        <div class="auth-field"><label for="registerPassword">Password</label><input id="registerPassword" name="password" type="password" placeholder="At least 6 characters" autocomplete="new-password" minlength="6" required></div>
+                        <div class="auth-field"><label for="registerConfirmPassword">Confirm password</label><input id="registerConfirmPassword" name="confirmPassword" type="password" placeholder="Repeat your password" autocomplete="new-password" required></div>
+                        <p id="registerMessage" class="auth-message" role="alert" aria-live="polite"></p>
+                        <button type="submit" class="btn btn-avyora auth-submit">Create account <i class="bi bi-arrow-right"></i></button>
+                    </form>
+                    <p class="auth-switch">Already have an account? <a href="login.html">Sign in</a></p>
+                </section>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="/src/main.js"></script><script type="module" src="/src/theme.js"></script>
+</body>
+</html>
