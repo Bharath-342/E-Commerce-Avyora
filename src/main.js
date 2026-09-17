@@ -916,12 +916,18 @@ function setCelestialAura(auraId, shouldScroll = false) {
    if (heroDescription) heroDescription.textContent = config.description;
    if (activeAuraHint) activeAuraHint.textContent = `Ambient Atmosphere: ${config.name}`;
 
-   // Update Hero Chips
+   // Update Hero & Registration Chips
    document.querySelectorAll(".celestial-aura-chip").forEach(function (chip) {
       const isActive = chip.dataset.aura === auraId;
       chip.classList.toggle("active", isActive);
       chip.setAttribute("aria-pressed", String(isActive));
    });
+
+   // Update Hidden Registration Aura Input if present
+   const registerAuraInput = document.getElementById("registerAuraInput");
+   if (registerAuraInput) {
+      registerAuraInput.value = auraId;
+   }
 
    // Update Active Aura Ribbon
    const ribbon = document.getElementById("celestialAuraRibbon");
@@ -1933,9 +1939,13 @@ function initAuthPages() {
             if (btnSpinner) btnSpinner.classList.remove("d-none");
          }
 
-         // Save user session & profile
-         localStorage.setItem("avyora-user", JSON.stringify({ fullName, email, password }));
-         localStorage.setItem("avyora-profile", JSON.stringify({ fullName, email, phone: "", dateOfBirth: "", address: "", city: "", photo: "" }));
+         const sanctuaryAura = String(formData.get("sanctuaryAura") || activeAura || "harmony");
+         const auraConfig = CELESTIAL_AURAS[sanctuaryAura] || CELESTIAL_AURAS["harmony"];
+
+         // Save user session & profile with chosen sanctuary atmosphere
+         localStorage.setItem("avyora-active-aura", sanctuaryAura);
+         localStorage.setItem("avyora-user", JSON.stringify({ fullName, email, password, aura: sanctuaryAura }));
+         localStorage.setItem("avyora-profile", JSON.stringify({ fullName, email, phone: "", dateOfBirth: "", address: "", city: "", photo: "", aura: sanctuaryAura, auraName: auraConfig.name }));
          localStorage.setItem("avyora-session", JSON.stringify({ email, signedInAt: new Date().toISOString() }));
 
          // Trigger Heavenly Celebration Ascension Portal
@@ -1943,6 +1953,10 @@ function initAuthPages() {
             const firstName = fullName.split(" ")[0] || "Friend";
             if (celebrationName) {
                celebrationName.textContent = `Welcome, ${firstName}!`;
+            }
+            const celebrationDesc = document.getElementById("celebrationDesc");
+            if (celebrationDesc) {
+               celebrationDesc.textContent = `Your sacred AVYORA account is created with the ${auraConfig.name} atmosphere. Entering a universe of divine luxury...`;
             }
             celebrationModal.classList.remove("d-none");
          }

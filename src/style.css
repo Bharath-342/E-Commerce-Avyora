@@ -8394,6 +8394,123 @@ body[data-aura="artisanal-zen"] .hero-section {
 }
 
 /* ==================================================
+   REGISTRATION PAGE - SANCTUARY AURA SELECTOR
+   ================================================== */
+
+.register-aura-selector {
+    margin-top: 4px;
+    margin-bottom: 20px;
+    padding: 14px 14px 12px;
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(255, 107, 0, 0.22);
+    border-radius: 14px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+    transition: border-color 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+}
+
+[data-theme="dark"] .register-aura-selector {
+    background: rgba(24, 22, 34, 0.72);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.register-aura-selector .celestial-aura-header {
+    margin-bottom: 10px;
+}
+
+.register-aura-selector .celestial-aura-chips {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+@media (max-width: 440px) {
+    .register-aura-selector .celestial-aura-chips {
+        grid-template-columns: 1fr;
+    }
+}
+
+.register-aura-selector .celestial-aura-chip {
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+.register-aura-selector .aura-icon-wrap {
+    width: 28px;
+    height: 28px;
+    font-size: 0.88rem;
+    border-radius: 8px;
+}
+
+.register-aura-selector .aura-chip-text strong {
+    font-size: 0.74rem;
+}
+
+.register-aura-selector .aura-chip-text small {
+    font-size: 0.62rem;
+}
+
+/* Atmospheric aura dynamic glow transitions on registration page */
+.heavenly-glow {
+    transition: background 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.7s ease;
+}
+
+body[data-aura="golden-dawn"] .register-aura-selector {
+    border-color: rgba(217, 119, 6, 0.38);
+    box-shadow: 0 8px 28px rgba(217, 119, 6, 0.14);
+}
+
+body[data-aura="golden-dawn"] .heavenly-glow-1 {
+    background: radial-gradient(circle, rgba(251, 191, 36, 0.48) 0%, rgba(245, 158, 11, 0.24) 50%, transparent 70%);
+}
+
+body[data-aura="golden-dawn"] .heavenly-glow-2 {
+    background: radial-gradient(circle, rgba(245, 158, 11, 0.38) 0%, rgba(217, 119, 6, 0.2) 50%, transparent 70%);
+}
+
+body[data-aura="golden-dawn"] .heavenly-glow-3 {
+    background: radial-gradient(circle, rgba(253, 230, 138, 0.42) 0%, rgba(217, 119, 6, 0.16) 55%, transparent 75%);
+}
+
+body[data-aura="midnight-serenity"] .register-aura-selector {
+    border-color: rgba(124, 58, 237, 0.38);
+    box-shadow: 0 8px 28px rgba(124, 58, 237, 0.14);
+}
+
+body[data-aura="midnight-serenity"] .heavenly-glow-1 {
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.45) 0%, rgba(79, 70, 229, 0.22) 50%, transparent 70%);
+}
+
+body[data-aura="midnight-serenity"] .heavenly-glow-2 {
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.42) 0%, rgba(109, 40, 217, 0.22) 50%, transparent 70%);
+}
+
+body[data-aura="midnight-serenity"] .heavenly-glow-3 {
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.38) 0%, rgba(59, 130, 246, 0.18) 55%, transparent 75%);
+}
+
+body[data-aura="artisanal-zen"] .register-aura-selector {
+    border-color: rgba(16, 185, 129, 0.38);
+    box-shadow: 0 8px 28px rgba(16, 185, 129, 0.14);
+}
+
+body[data-aura="artisanal-zen"] .heavenly-glow-1 {
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.45) 0%, rgba(16, 185, 129, 0.22) 50%, transparent 70%);
+}
+
+body[data-aura="artisanal-zen"] .heavenly-glow-2 {
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.38) 0%, rgba(5, 150, 105, 0.2) 50%, transparent 70%);
+}
+
+body[data-aura="artisanal-zen"] .heavenly-glow-3 {
+    background: radial-gradient(circle, rgba(167, 243, 208, 0.42) 0%, rgba(4, 120, 87, 0.16) 55%, transparent 75%);
+}
+
+/* ==================================================
    CHECKOUT COMPANION BUNDLE (6 PRODUCTS - SELECT 3)
    ================================================== */
 
