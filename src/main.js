@@ -4,6 +4,8 @@
    ================================================== */
 
 import "./style.css";
+import "./ai-agent.css";
+import { initAvyoraAiAgent } from "./ai-agent.js";
 
 const PRODUCT_API_URL = "https://dummyjson.com/products?limit=0";
 const USD_TO_INR = 83.5;
@@ -105,6 +107,8 @@ function normalizeWishlistIds(ids) {
 document.addEventListener("DOMContentLoaded", function () {
    bindProductControls();
    initCelestialAuraEngine();
+   setupAvyoraStoreBridge();
+   initAvyoraAiAgent();
    bindNavigationConfirmation();
    initAuthNavigation();
    updateCartCount();
@@ -122,6 +126,53 @@ document.addEventListener("DOMContentLoaded", function () {
    renderWishlistDrawer();
    loadProducts();
 });
+
+function setupAvyoraStoreBridge() {
+   window.AvyoraStoreBridge = {
+      getProducts: function () {
+         return (products && products.length) ? products : FALLBACK_PRODUCTS;
+      },
+      getCart: function () {
+         return cartItems;
+      },
+      addToCart: function (product, buyNow) {
+         addToCart(product, buyNow);
+      },
+      openCartDrawer: function () {
+         openCartDrawer();
+      },
+      openWishlistDrawer: function () {
+         openWishlistDrawer();
+      },
+      showCartMessage: function (msg) {
+         showCartMessage(msg);
+      },
+      formatPrice: function (p) {
+         return formatPrice(p);
+      },
+      filterCategory: function (cat) {
+         const catBtn = document.querySelector(`[data-category="${cat}"]`);
+         if (catBtn) {
+            catBtn.click();
+            catBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+         } else {
+            window.location.href = `index.html?category=${encodeURIComponent(cat)}#product-edit`;
+         }
+      },
+      searchProducts: function (term) {
+         sessionStorage.removeItem("avyora-filtered-ids");
+         executeUniversalNavigation(term);
+      },
+      showProductList: function (productIds, term = "") {
+         if (productIds && productIds.length) {
+            sessionStorage.setItem("avyora-filtered-ids", JSON.stringify(productIds));
+         } else {
+            sessionStorage.removeItem("avyora-filtered-ids");
+         }
+         executeUniversalNavigation(term);
+      }
+   };
+}
 
 function bindNavigationConfirmation() {
    const dialog = document.createElement("div");
@@ -483,141 +534,36 @@ function getCatalogCategory(category) {
    return "accessories";
 }
 
-const UNIVERSAL_PAGES = [
-   {
-      name: "Home",
-      url: "index.html",
-      badge: "Main Store",
-      icon: "bi-house-door-fill",
-      description: "Explore curated sanctuary collections & bestsellers",
-      keywords: ["home", "homepage", "store", "shop", "main", "frontpage", "start"]
-   },
-   {
-      name: "Cart",
-      url: "cart.html",
-      badge: "Shopping Bag",
-      icon: "bi-bag-check-fill",
-      description: "Review your selected items, apply promo & checkout",
-      keywords: ["cart", "bag", "basket", "shopping bag", "items", "trolley", "my cart"]
-   },
-   {
-      name: "My Account",
-      url: "account.html",
-      badge: "Profile & Orders",
-      icon: "bi-person-circle",
-      description: "Personal profile, orders, saved shipping & preferences",
-      keywords: ["account", "profile", "orders", "history", "user", "settings", "my account", "photo", "sign out", "logout"]
-   },
-   {
-      name: "Wishlist",
-      url: "favorites.html",
-      badge: "Saved Finds",
-      icon: "bi-heart-fill",
-      description: "Your saved must-have pieces & inspirations",
-      keywords: ["wishlist", "favorites", "saved", "favourite", "hearts", "liked", "collection"]
-   },
-   {
-      name: "Checkout",
-      url: "checkout.html",
-      badge: "Secure Payment",
-      icon: "bi-shield-lock-fill",
-      description: "256-bit SSL encrypted order checkout & delivery",
-      keywords: ["checkout", "pay", "payment", "order", "billing", "purchase"]
-   },
-   {
-      name: "Categories",
-      url: "categories.html",
-      badge: "Browse All",
-      icon: "bi-grid-fill",
-      description: "Browse all 9 curated lifestyle departments",
-      keywords: ["categories", "category", "departments", "catalogue", "browse", "all categories"]
-   }
-];
-
-const UNIVERSAL_CATEGORIES = [
-   { id: "electronics", name: "Electronics", icon: "bi-lightning-charge-fill", desc: "Smart upgrades, wireless audio & precision tech", keywords: ["electronics", "electronic", "tech", "gadgets"] },
-   { id: "accessories", name: "Accessories", icon: "bi-gem", desc: "Expressive details, watches, sunglasses & gems", keywords: ["accessories", "accessory", "jewelry", "jewellery"] },
-   { id: "menswear", name: "Menswear", icon: "bi-person", desc: "Easy essentials, classic shirts & tailored fits", keywords: ["menswear", "mens", "men's fashion", "mens clothing"] },
-   { id: "womenswear", name: "Womenswear", icon: "bi-stars", desc: "Polished favorites & modern silhouettes", keywords: ["womenswear", "womens", "women's fashion", "womens clothing"] },
-   { id: "beauty", name: "Beauty", icon: "bi-droplet-fill", desc: "Daily rituals, skincare & luxury fragrances", keywords: ["beauty", "cosmetics", "skincare", "fragrance", "fragrances"] },
-   { id: "home", name: "Home & Living", icon: "bi-house-heart-fill", desc: "Comfort-first finds & artisanal decor", keywords: ["home", "furniture", "home & living", "home living", "decor"] },
-   { id: "groceries", name: "Groceries", icon: "bi-basket-fill", desc: "Pantry essentials & fresh staples", keywords: ["groceries", "grocery", "pantry", "food"] },
-   { id: "sports", name: "Sports", icon: "bi-trophy-fill", desc: "Activewear & workout essentials", keywords: ["sports", "sport", "fitness", "athletics"] },
-   { id: "automotive", name: "Automotive", icon: "bi-car-front-fill", desc: "Road-ready essentials & vehicle gear", keywords: ["automotive", "auto", "vehicle", "vehicles"] }
-];
-
 function resolveUniversalSearchRoute(rawQuery) {
-   const query = String(rawQuery || "").trim().toLowerCase();
-   if (!query) return null;
+   const query = String(rawQuery || "").trim();
 
-   // 1. Exact or keyword match on pages
-   const matchedPage = UNIVERSAL_PAGES.find(p => {
-      if (p.name.toLowerCase() === query) return true;
-      return p.keywords.some(k => k === query);
-   });
-   if (matchedPage) {
-      return { type: "page", url: matchedPage.url };
-   }
-
-   // 2. Strong prefix match for pages
-   const prefixPage = UNIVERSAL_PAGES.find(p => {
-      if (p.name.toLowerCase().startsWith(query)) return true;
-      return p.keywords.some(k => k.startsWith(query));
-   });
-   if (prefixPage && query.length >= 3 && ["cart", "home", "acco", "wish", "chec", "cate"].some(prefix => query.startsWith(prefix))) {
-      return { type: "page", url: prefixPage.url };
-   }
-
-   // 3. Category match
-   const matchedCat = UNIVERSAL_CATEGORIES.find(c => {
-      if (c.id === query || c.name.toLowerCase() === query) return true;
-      return c.keywords.some(k => k === query);
-   });
-   if (matchedCat) {
-      return { type: "category", categoryId: matchedCat.id, url: `index.html?category=${encodeURIComponent(matchedCat.id)}#product-edit` };
-   }
-
-   // 4. Product catalog search
+   // Search only products in the catalog
    return {
       type: "product",
-      query: rawQuery.trim(),
-      url: `index.html?search=${encodeURIComponent(rawQuery.trim())}#product-edit`
+      query: query,
+      url: query ? `index.html?search=${encodeURIComponent(query)}#product-edit` : `index.html#product-edit`
    };
 }
 
 function executeUniversalNavigation(rawQuery) {
    const route = resolveUniversalSearchRoute(rawQuery);
-   if (!route) return;
-
    const productSearch = document.getElementById("productSearch");
 
-   if (route.type === "page") {
-      window.location.href = route.url;
+   if (productSearch) {
+      activeCategory = "all";
+      document.querySelectorAll(".product-tab").forEach(tab => {
+         const isAll = tab.dataset.filter === "all";
+         tab.classList.toggle("active", isAll);
+         tab.setAttribute("aria-selected", String(isAll));
+      });
+      productSearch.value = route.query;
+      document.querySelectorAll("[data-product-search-form] input").forEach(input => { input.value = route.query; });
+      searchTerm = route.query.toLowerCase();
+      renderProducts();
+      document.getElementById("product-edit")?.scrollIntoView({ behavior: "smooth" });
       return;
    }
-
-   if (route.type === "category") {
-      if (productSearch) {
-         const requestedCategory = document.querySelector(`.product-tab[data-filter="${CSS.escape(route.categoryId)}"]`);
-         if (requestedCategory) requestedCategory.click();
-         document.getElementById("product-edit")?.scrollIntoView({ behavior: "smooth" });
-         return;
-      }
-      window.location.href = route.url;
-      return;
-   }
-
-   if (route.type === "product") {
-      if (productSearch) {
-         productSearch.value = route.query;
-         document.querySelectorAll("[data-product-search-form] input").forEach(input => { input.value = route.query; });
-         searchTerm = route.query.toLowerCase();
-         renderProducts();
-         document.getElementById("product-edit")?.scrollIntoView({ behavior: "smooth" });
-         return;
-      }
-      window.location.href = route.url;
-   }
+   window.location.href = route.url;
 }
 
 function bindProductControls() {
@@ -659,45 +605,23 @@ function bindProductControls() {
          const val = input.value.trim().toLowerCase();
          const activeProductList = (products && products.length > 0) ? products : normalizeProducts(FALLBACK_PRODUCTS);
 
-         // Pages
-         let matchedPages = [];
-         if (!val) {
-            matchedPages = UNIVERSAL_PAGES.slice(0, 5);
-         } else {
-            matchedPages = UNIVERSAL_PAGES.filter(p => {
-               return p.name.toLowerCase().includes(val) ||
-                  p.description.toLowerCase().includes(val) ||
-                  p.keywords.some(k => k.includes(val) || val.includes(k));
-            });
-         }
-
-         // Categories
-         let matchedCats = [];
-         if (!val) {
-            matchedCats = UNIVERSAL_CATEGORIES.slice(0, 4);
-         } else {
-            matchedCats = UNIVERSAL_CATEGORIES.filter(c => {
-               return c.name.toLowerCase().includes(val) ||
-                  c.desc.toLowerCase().includes(val) ||
-                  c.keywords.some(k => k.includes(val) || val.includes(k));
-            });
-         }
-
-         // Products
+         // Search only products
          let matchedProducts = [];
          if (val) {
             matchedProducts = activeProductList.filter(p => {
                const fullText = `${p.title} ${p.brand} ${p.category} ${p.displayCategory} ${p.description || ""} ${p.tags ? p.tags.join(" ") : ""}`.toLowerCase();
                return fullText.includes(val);
-            }).slice(0, 4);
+            }).slice(0, 6);
+         } else {
+            matchedProducts = activeProductList.slice(0, 4);
          }
 
-         if (val && matchedPages.length === 0 && matchedCats.length === 0 && matchedProducts.length === 0) {
+         if (val && matchedProducts.length === 0) {
             dropdown.innerHTML = `
                <div class="usd-empty">
                   <i class="bi bi-search"></i>
-                  <div>No results for "<strong>${escapeHtml(input.value.trim())}</strong>"</div>
-                  <div class="mt-2"><a href="index.html#product-edit" class="btn btn-sm btn-outline-secondary">Browse All Sanctuary Finds</a></div>
+                  <div>No products found for "<strong>${escapeHtml(input.value.trim())}</strong>"</div>
+                  <div class="mt-2"><a href="index.html#product-edit" class="btn btn-sm btn-outline-secondary">Browse All Products</a></div>
                </div>
             `;
             dropdown.hidden = false;
@@ -706,54 +630,12 @@ function bindProductControls() {
 
          let html = "";
 
-         if (matchedPages.length > 0) {
-            html += `
-               <div class="usd-section">
-                  <div class="usd-section-header">
-                     <span>${val ? "Pages & Navigation" : "Quick Navigation"}</span>
-                     <i class="bi bi-compass"></i>
-                  </div>
-                  ${matchedPages.map(page => `
-                     <a href="${page.url}" class="usd-item usd-page-item" data-destination="${page.url}">
-                        <div class="usd-icon-badge"><i class="bi ${page.icon}"></i></div>
-                        <div class="usd-item-content">
-                           <div class="usd-title-row">
-                              <span class="usd-title">${escapeHtml(page.name)}</span>
-                              <span class="usd-tag">${escapeHtml(page.badge)}</span>
-                           </div>
-                           <div class="usd-subtitle">${escapeHtml(page.description)}</div>
-                        </div>
-                        <i class="bi bi-arrow-right usd-action-arrow"></i>
-                     </a>
-                  `).join("")}
-               </div>
-            `;
-         }
-
-         if (matchedCats.length > 0) {
-            html += `
-               <div class="usd-section">
-                  <div class="usd-section-header">
-                     <span>${val ? "Categories" : "Popular Departments"}</span>
-                     <i class="bi bi-tags"></i>
-                  </div>
-                  <div class="usd-categories-chips">
-                     ${matchedCats.map(cat => `
-                        <a href="index.html?category=${cat.id}#product-edit" class="usd-cat-chip" data-category="${cat.id}">
-                           <i class="bi ${cat.icon}"></i> <span>${escapeHtml(cat.name)}</span>
-                        </a>
-                     `).join("")}
-                  </div>
-               </div>
-            `;
-         }
-
          if (matchedProducts.length > 0) {
             html += `
                <div class="usd-section">
                   <div class="usd-section-header">
-                     <span>Matching Products</span>
-                     <span class="text-muted" style="font-size: 0.68rem; font-weight: 500;">${matchedProducts.length} top finds</span>
+                     <span>${val ? "Matching Products" : "Popular Products"}</span>
+                     <span class="text-muted" style="font-size: 0.68rem; font-weight: 500;">${matchedProducts.length} results</span>
                   </div>
                   ${matchedProducts.map(p => `
                      <a href="product.html?id=${p.id}" class="usd-item usd-product-item" data-product-id="${p.id}">
@@ -763,7 +645,7 @@ function bindProductControls() {
                               <span class="usd-title">${escapeHtml(p.title)}</span>
                               <span class="usd-price">${formatPrice(p.price)}</span>
                            </div>
-                           <div class="usd-subtitle">${escapeHtml(p.brand || "Avyora")} · <span style="text-transform: capitalize;">${escapeHtml(p.category || "Sanctuary")}</span></div>
+                           <div class="usd-subtitle">${escapeHtml(p.brand || "Avyora")} · <span style="text-transform: capitalize;">${escapeHtml(p.displayCategory || p.category || "Product")}</span></div>
                         </div>
                         <i class="bi bi-chevron-right usd-action-arrow"></i>
                      </a>
@@ -774,27 +656,13 @@ function bindProductControls() {
 
          html += `
             <div class="usd-footer">
-               <span><i class="bi bi-arrow-return-left me-1"></i> Press <strong>Enter</strong> to open ${val ? `"${escapeHtml(input.value.trim())}"` : "all"}</span>
-               <span class="text-muted">Universal Search</span>
+               <span><i class="bi bi-arrow-return-left me-1"></i> Press <strong>Enter</strong> to search products</span>
+               <span class="text-muted">Product Search</span>
             </div>
          `;
 
          dropdown.innerHTML = html;
          dropdown.hidden = false;
-
-         // Handle internal category clicks when on index.html
-         if (productSearch) {
-            dropdown.querySelectorAll(".usd-cat-chip").forEach(chip => {
-               chip.addEventListener("click", function (ev) {
-                  ev.preventDefault();
-                  const catId = chip.dataset.category;
-                  const targetTab = document.querySelector(`.product-tab[data-filter="${CSS.escape(catId)}"]`);
-                  if (targetTab) targetTab.click();
-                  dropdown.hidden = true;
-                  document.getElementById("product-edit")?.scrollIntoView({ behavior: "smooth" });
-               });
-            });
-         }
       };
 
       input.addEventListener("focus", function () {
@@ -837,6 +705,9 @@ function bindProductControls() {
    // 3. Bidirectional Sync: Catalog Search Input -> Navbar Search Input & Live Filter
    if (productSearch) {
       productSearch.addEventListener("input", function (event) {
+         if (event.isTrusted) {
+            sessionStorage.removeItem("avyora-filtered-ids");
+         }
          const val = event.target.value;
          navbarSearchInputs.forEach(input => {
             if (input.value !== val) input.value = val;
@@ -854,6 +725,7 @@ function bindProductControls() {
 
    document.querySelectorAll(".product-tab").forEach(function (tab) {
       tab.addEventListener("click", function () {
+         sessionStorage.removeItem("avyora-filtered-ids");
          activeCategory = tab.dataset.filter;
          document.querySelectorAll(".product-tab").forEach(function (item) {
             const isActive = item === tab;
@@ -1011,10 +883,20 @@ function renderProducts() {
 
    const auraConfig = CELESTIAL_AURAS[activeAura] || CELESTIAL_AURAS["harmony"];
 
+   let aiFilteredIds = null;
+   try {
+      aiFilteredIds = JSON.parse(sessionStorage.getItem("avyora-filtered-ids") || "null");
+   } catch (e) {
+      aiFilteredIds = null;
+   }
+
    let visibleProducts = products.filter(function (product) {
+      if (aiFilteredIds && Array.isArray(aiFilteredIds) && aiFilteredIds.length > 0) {
+         return aiFilteredIds.includes(product.id);
+      }
       const matchesCategory = activeCategory === "all" || product.category === activeCategory;
-      const searchableText = `${product.title} ${product.brand} ${product.category} ${product.description} ${product.tags.join(" ")}`.toLowerCase();
-      const matchesSearch = searchableText.includes(searchTerm);
+      const searchableText = `${product.title} ${product.brand} ${product.category} ${product.displayCategory || ""} ${product.description} ${product.tags.join(" ")}`.toLowerCase();
+      const matchesSearch = !searchTerm || searchableText.includes(searchTerm);
       const matchesAura = activeAura === "harmony" || auraConfig.matcher(product);
 
       return matchesCategory && matchesSearch && matchesAura;
@@ -1026,7 +908,8 @@ function renderProducts() {
 
    grid.innerHTML = visibleProducts.map(createProductCard).join("");
    const auraSuffix = activeAura !== "harmony" ? ` in ${auraConfig.name}` : "";
-   document.getElementById("productCount").textContent = `${visibleProducts.length} curated products${auraSuffix}`;
+   const filterSuffix = aiFilteredIds && aiFilteredIds.length ? ` (AI Selection)` : "";
+   document.getElementById("productCount").textContent = `${visibleProducts.length} curated products${auraSuffix}${filterSuffix}`;
    document.getElementById("productEmptyState").hidden = visibleProducts.length !== 0;
    bindCardActions();
 }
@@ -1098,12 +981,17 @@ function bindCardActions() {
    });
 
    document.querySelectorAll(".product-cart-button, .product-buy-button").forEach(function (button) {
-      button.addEventListener("click", function () {
+      button.addEventListener("click", function (event) {
+         event.stopPropagation();
          const card = button.closest(".product-item");
          const product = products.find(item => String(item.id) === card.dataset.productId);
 
          if (product) {
-            addToCart(product, button.classList.contains("product-buy-button"));
+            const isBuyNow = button.classList.contains("product-buy-button");
+            addToCart(product, isBuyNow);
+            if (isBuyNow) {
+               window.location.href = "checkout.html";
+            }
          }
       });
    });
@@ -1220,7 +1108,7 @@ function initProductDetailPage() {
                <p class="product-detail-description">${escapeHtml(product.description)}</p>
                <div class="product-detail-stock"><i class="bi bi-check-circle-fill"></i> ${product.stock} available · Ships in 2-3 business days</div>
                ${product.tags.length ? `<div class="product-detail-tags">${product.tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join("")}</div>` : ""}
-               <div class="product-detail-actions"><button class="btn btn-avyora" type="button" id="productDetailAdd"><i class="bi bi-bag-plus"></i> Add to bag</button><button class="product-detail-wishlist" type="button" id="productDetailWishlist" aria-pressed="${wishlistItems.includes(product.id)}"><i class="bi ${wishlistItems.includes(product.id) ? "bi-heart-fill" : "bi-heart"}"></i> Save</button></div>
+               <div class="product-detail-actions"><button class="btn btn-avyora" type="button" id="productDetailAdd"><i class="bi bi-bag-plus"></i> Add to bag</button><button class="btn btn-avyora-buy" type="button" id="productDetailBuy"><i class="bi bi-lightning-charge-fill"></i> Buy now</button><button class="product-detail-wishlist" type="button" id="productDetailWishlist" aria-pressed="${wishlistItems.includes(product.id)}"><i class="bi ${wishlistItems.includes(product.id) ? "bi-heart-fill" : "bi-heart"}"></i> Save</button></div>
                <div class="product-detail-benefits"><span><i class="bi bi-truck"></i> Free shipping</span><span><i class="bi bi-arrow-repeat"></i> 30-day returns</span><span><i class="bi bi-shield-check"></i> Quality checked</span></div>
             </div>
          </div>
@@ -1234,6 +1122,10 @@ function initProductDetailPage() {
          });
       });
       document.getElementById("productDetailAdd").addEventListener("click", () => addToCart(product, false));
+      document.getElementById("productDetailBuy")?.addEventListener("click", function () {
+         addToCart(product, true);
+         window.location.href = "checkout.html";
+      });
       document.getElementById("productDetailWishlist").addEventListener("click", function () {
          if (wishlistItems.includes(product.id)) removeFromWishlist(product.id);
          else {
@@ -1988,7 +1880,11 @@ function initAuthPages() {
          if (document.getElementById("rememberMe").checked) localStorage.setItem("avyora-remembered-email", email);
          else localStorage.removeItem("avyora-remembered-email");
          localStorage.setItem("avyora-session", JSON.stringify({ email, signedInAt: new Date().toISOString() }));
-         window.location.href = "account.html";
+         message.style.color = "var(--success-color, #198754)";
+         message.textContent = "Welcome back! Redirecting to home...";
+         setTimeout(function () {
+            window.location.href = "index.html";
+         }, 350);
       });
    }
 }

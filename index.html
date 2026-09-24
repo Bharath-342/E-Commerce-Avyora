@@ -152,8 +152,8 @@
                         <input
                             type="search"
                             class="form-control"
-                            placeholder="Search products, pages (e.g. cart, account, home)..."
-                            aria-label="Search products and pages"
+                            placeholder="Search products (e.g. watches, headphones, shoes)..."
+                            aria-label="Search products"
                             autocomplete="off">
 
 
@@ -421,45 +421,6 @@
 
                             </p>
 
-                            <div class="celestial-aura-selector" aria-label="Choose your shopping aura">
-                                <div class="celestial-aura-header">
-                                    <span class="celestial-aura-label"><i class="bi bi-stars text-warning"></i> CHOOSE YOUR SANCTUARY AURA</span>
-                                    <span class="celestial-aura-hint" id="activeAuraHint">Ambient Atmosphere: All Sanctuary</span>
-                                </div>
-                                <div class="celestial-aura-chips" role="group" aria-label="Shopping auras">
-                                    <button class="celestial-aura-chip active" type="button" data-aura="harmony" aria-pressed="true">
-                                        <span class="aura-icon-wrap"><i class="bi bi-gem"></i></span>
-                                        <div class="aura-chip-text">
-                                            <strong>All Sanctuary</strong>
-                                            <small>Balanced Harmony</small>
-                                        </div>
-                                    </button>
-
-                                    <button class="celestial-aura-chip" type="button" data-aura="golden-dawn" aria-pressed="false">
-                                        <span class="aura-icon-wrap aura-icon-golden"><i class="bi bi-sun-fill"></i></span>
-                                        <div class="aura-chip-text">
-                                            <strong>Golden Dawn</strong>
-                                            <small>Solar Radiance &amp; Watches</small>
-                                        </div>
-                                    </button>
-
-                                    <button class="celestial-aura-chip" type="button" data-aura="midnight-serenity" aria-pressed="false">
-                                        <span class="aura-icon-wrap aura-icon-midnight"><i class="bi bi-moon-stars-fill"></i></span>
-                                        <div class="aura-chip-text">
-                                            <strong>Midnight Serenity</strong>
-                                            <small>Acoustic Calm &amp; Tech</small>
-                                        </div>
-                                    </button>
-
-                                    <button class="celestial-aura-chip" type="button" data-aura="artisanal-zen" aria-pressed="false">
-                                        <span class="aura-icon-wrap aura-icon-zen"><i class="bi bi-flower1"></i></span>
-                                        <div class="aura-chip-text">
-                                            <strong>Artisanal Zen</strong>
-                                            <small>Mindful Living &amp; Craft</small>
-                                        </div>
-                                    </button>
-                                </div>
-                            </div>
 
                             <div class="hero-buttons">
 
@@ -545,64 +506,6 @@
 
         </section>
 
-        <section class="style-quiz-section" aria-labelledby="styleQuizTitle">
-            <div class="container">
-                <div class="style-quiz-wrapper" id="styleQuiz">
-                    <div class="row g-4 align-items-stretch">
-                        <!-- Left Side: Interactive Quiz -->
-                        <div class="col-lg-5 col-xl-5">
-                            <div class="style-quiz-left-panel">
-                                <div class="style-quiz-heading">
-                                    <div>
-                                        <span class="section-kicker">NOT SURE WHERE TO START?</span>
-                                        <h2 id="styleQuizTitle">Tell us what you need.</h2>
-                                        <p class="style-quiz-intro">Choose your preference at each step. Watch your personalized matches appear on the right in real time.</p>
-                                    </div>
-                                </div>
-                                <div class="style-quiz-progress-bar-wrap">
-                                    <div class="d-flex justify-content-between align-items-center mb-1">
-                                        <span class="style-quiz-step" id="styleQuizStep">Step 1 of 3</span>
-                                        <span class="style-quiz-hint">Live Curation</span>
-                                    </div>
-                                    <div class="style-quiz-progress-track">
-                                        <div class="style-quiz-progress-fill" id="styleQuizProgressFill" style="width: 33.33%;"></div>
-                                    </div>
-                                </div>
-                                <p class="style-quiz-prompt" id="styleQuizQuestion">What are you shopping for today?</p>
-                                <div class="style-quiz-options" id="styleQuizOptions">
-                                    <button type="button" data-quiz-value="power" data-quiz-filter="electronics"><i class="bi bi-lightning-charge"></i><span class="style-quiz-option-copy"><strong>Useful upgrades</strong><small>Phones, gadgets, and smart upgrades</small></span><i class="bi bi-arrow-right style-quiz-option-arrow"></i></button>
-                                    <button type="button" data-quiz-value="style" data-quiz-filter="womenswear"><i class="bi bi-stars"></i><span class="style-quiz-option-copy"><strong>A little polish</strong><small>Clothing and polished everyday pieces</small></span><i class="bi bi-arrow-right style-quiz-option-arrow"></i></button>
-                                    <button type="button" data-quiz-value="home" data-quiz-filter="home"><i class="bi bi-house-heart"></i><span class="style-quiz-option-copy"><strong>Make home better</strong><small>Comfortable finds for your space</small></span><i class="bi bi-arrow-right style-quiz-option-arrow"></i></button>
-                                </div>
-                                <div class="style-quiz-result" id="styleQuizResult" hidden></div>
-                            </div>
-                        </div>
-
-                        <!-- Right Side: Dynamic Live Related Products -->
-                        <div class="col-lg-7 col-xl-7">
-                            <div class="style-quiz-right-panel">
-                                <div class="quiz-related-header">
-                                    <div>
-                                        <span class="quiz-related-kicker"><i class="bi bi-sparkles"></i> LIVE MATCHES</span>
-                                        <h3 class="quiz-related-title" id="quizRelatedTitle">Curated for your lifestyle</h3>
-                                    </div>
-                                    <span class="quiz-live-badge" id="quizLiveBadge">
-                                        <span class="quiz-live-dot"></span> Real-time recommendation
-                                    </span>
-                                </div>
-                                <div class="quiz-related-products row g-3" id="quizRelatedProducts">
-                                    <!-- Populated dynamically via JS -->
-                                </div>
-                                <div class="quiz-related-footer">
-                                    <span class="quiz-related-footer-text"><i class="bi bi-shield-check"></i> Handpicked from Avyora catalog with verified reviews</span>
-                                    <a href="#product-edit" class="quiz-related-all-link" id="quizRelatedAllLink">Explore full collection <i class="bi bi-arrow-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
 
         <!-- ==================================================
@@ -615,22 +518,6 @@
 
                 <div class="product-breadcrumb">HOME <span>/</span> ALL PRODUCTS</div>
 
-                <!-- Celestial Active Aura Ribbon -->
-                <div class="celestial-aura-ribbon" id="celestialAuraRibbon" hidden>
-                    <div class="aura-ribbon-content">
-                        <span class="aura-ribbon-beacon"></span>
-                        <div class="aura-ribbon-info">
-                            <span class="aura-ribbon-kicker" id="auraRibbonKicker">ACTIVE SANCTUARY ATMOSPHERE</span>
-                            <strong id="auraRibbonTitle">Midnight Serenity</strong>
-                            <span id="auraRibbonDesc">Curated for nocturnal focus, high-fidelity acoustics, and quiet craft.</span>
-                        </div>
-                    </div>
-                    <div class="aura-ribbon-actions">
-                        <button type="button" class="aura-ribbon-reset" id="auraRibbonReset">
-                            <i class="bi bi-arrow-counterclockwise"></i> Show all sanctuary
-                        </button>
-                    </div>
-                </div>
 
                 <div class="product-edit-heading">
                     <div>
@@ -655,7 +542,7 @@
                 </div>
 
                 <div class="product-toolbar">
-                    <label class="product-search"><i class="bi bi-search"></i><input id="productSearch" type="search" placeholder="Search the collection..." aria-label="Search products"></label>
+                    <label class="product-search"><i class="bi bi-search"></i><input id="productSearch" type="search" placeholder="Search products in collection..." aria-label="Search products"></label>
                     <div class="product-toolbar-actions">
                         <span id="productCount" class="product-count">Curating products...</span>
                         <label class="product-sort-label">Sort by <select id="productSort" aria-label="Sort products"><option value="featured">Featured</option><option value="price-low">Price: low to high</option><option value="price-high">Price: high to low</option><option value="rating">Top rated</option></select></label>
@@ -1281,35 +1168,6 @@
     </script>
 
 
-    <!-- Floating Celestial Aura Dock -->
-    <div class="floating-aura-widget" id="floatingAuraWidget">
-        <div class="floating-aura-menu" id="floatingAuraMenu" hidden>
-            <div class="floating-aura-menu-header">
-                <span>Select Sanctuary Atmosphere</span>
-            </div>
-            <button type="button" class="floating-aura-item active" data-aura="harmony">
-                <i class="bi bi-gem"></i>
-                <span>All Sanctuary (Harmony)</span>
-            </button>
-            <button type="button" class="floating-aura-item" data-aura="golden-dawn">
-                <i class="bi bi-sun-fill text-warning"></i>
-                <span>Golden Dawn (Radiance &amp; Watches)</span>
-            </button>
-            <button type="button" class="floating-aura-item" data-aura="midnight-serenity">
-                <i class="bi bi-moon-stars-fill" style="color: #a78bfa;"></i>
-                <span>Midnight Serenity (Audio &amp; Tech)</span>
-            </button>
-            <button type="button" class="floating-aura-item" data-aura="artisanal-zen">
-                <i class="bi bi-flower1 text-success"></i>
-                <span>Artisanal Zen (Home &amp; Craft)</span>
-            </button>
-        </div>
-        <button type="button" class="floating-aura-btn" id="floatingAuraBtn" aria-label="Change shopping aura" aria-expanded="false">
-            <span class="floating-aura-dot" id="floatingAuraDot"></span>
-            <span class="floating-aura-label" id="floatingAuraLabel">Aura: All Sanctuary</span>
-            <i class="bi bi-chevron-up ms-1" id="floatingAuraChevron"></i>
-        </button>
-    </div>
 
     <!-- ==================================================
          MAIN JS
